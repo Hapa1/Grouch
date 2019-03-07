@@ -1,0 +1,23 @@
+.mapContainer {
+    display: flex; 
+}
+
+.titleContainer {
+    display: flex; 
+    justify-content: space-between;
+}
+
+.id {
+    margin-left: 10px;
+}
+
+.description {
+    margin-left: 20px;
+    max-width: 25rem;
+}
+
+.footerContainer {
+    margin-top: 1rem;
+    display: flex; 
+    justify-content: space-around;
+}
