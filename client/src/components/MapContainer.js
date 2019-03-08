@@ -41,22 +41,46 @@ export class MapContainer extends Component {
     }
   }
 
+  percentify = (container) => {
+    return container.level + '%'
+  }
+  checkLevel = (container) => {
+    const level = container.level
+    if(level <= 25){
+      return 'https://s3-us-west-1.amazonaws.com/lootbox1/public/green.png'
+    }
+    else if(level > 25 && level <= 50 ){
+      return 'https://s3-us-west-1.amazonaws.com/lootbox1/public/yellow.png'
+    }
+    else if(level > 50 && level <= 75 ){
+      return 'https://s3-us-west-1.amazonaws.com/lootbox1/public/orange.png'
+    }
+    else if(level > 75 && level <= 100 ){
+      return 'https://s3-us-west-1.amazonaws.com/lootbox1/public/red.png'
+    }
+
+  }
 
   render() {
+    
     const markers = []
     var i = 0
     containers.forEach((c) => {
-    
+      const url = this.checkLevel(c)
+      const level = this.percentify(c)
+      console.log(level)
+      
       markers.push(
       <Marker
-        icon={'https://cdn4.iconfinder.com/data/icons/6x16-free-application-icons/16/Trash.png'}
+        icon={url}
         key={c._id}
         onClick={this.onMarkerClick}
         name={c.name}
         description={c.description}
         url={c.url}
         id={c._id}
-        level={c.level}
+        level={level}
+        percent={level}
         address={c.address}
         city={c.city}
         owner={c.owner}
@@ -64,7 +88,7 @@ export class MapContainer extends Component {
         position = {{
           lat: 37.3300 + i,
           lng: -121.8811
-        }}
+         }}
       />);
       i = i + .010
     });
@@ -73,10 +97,10 @@ export class MapContainer extends Component {
       
       <Map
         google={this.props.google}
-        mapTypeControl={false}
-        streetViewControl={false}
         zoom={14}
         style={mapStyles}
+        mapTypeControl={false}
+        streetViewControl={false}
         styles={customStyle}
         initialCenter={{
          lat: 37.3352,
@@ -85,13 +109,14 @@ export class MapContainer extends Component {
       >
         {markers}
         
-
-        
         <InfoWindow
           marker={this.state.activeMarker}
           visible={this.state.showingInfoWindow}
           onClose={this.onClose}
         >
+          <WindowContent 
+            props={{...container}}
+          />
           <div>
             
             <div className="mapContainer">
@@ -104,7 +129,7 @@ export class MapContainer extends Component {
                     <h4>{this.state.selectedPlace.name}</h4>
                   </div>
                   <div className="id">
-                    <h5><span class="badge badge-secondary">{this.state.selectedPlace.id}</span></h5>
+                    <h5><span className="badge badge-secondary">{this.state.selectedPlace.id}</span></h5>
                   </div>
                 </div>
                 <div>
@@ -123,9 +148,10 @@ export class MapContainer extends Component {
               </div>
             </div>
             <div className="footerContainer">
-            <button type="button" class="btn btn-success">Details</button>
-            <button type="button" class="btn btn-success">Edit</button>
-            <button type="button" class="btn btn-success">Remove</button>
+            <button type="button" className="btn btn-success">Details</button>
+            <button type="button" className="btn btn-success">Edit</button>
+            <button type="button" className="btn btn-success">Refresh</button>
+            <button type="button" className="btn btn-success">Remove</button>
             </div>
           </div>
         </InfoWindow>
