@@ -1,32 +1,19 @@
 [
         {
 
-            "name": "Front-Loading Container",
+            "name": "Small Trash Bin",
             "type": "Solid Rubbish",
             "description": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.",
-            "address": "404 N 5th St",
-            "city": "San Jose, CA 95113",
-            "owner": "Moore Residence",
-            "level": "99%",
-            "lat": 37.3352,
-            "lng": -121.8811,
+            "address": "150 E San Fernando St",
+            "city": "San Jose, CA 95112",
+            "owner": "Martin Luther King Jr. Library",
+            "level": 99,
+            "lat": 37.336,
+            "lng": -121.89,
             "_id": "5c7cf",
-            "url": "http://nebula.wsimg.com/80b05e843234638ca47ed2544f81a60e?AccessKeyId=041E087EA41AF0FCA5B5&disposition=0&alloworigin=1",
-            "__v": 0
-        },
-        {
-            "name": "Front-Loading Container",
-            "type": "Solid Rubbish",
-            "description": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.",
-            "address": "404 N 5th St",
-            "city": "San Jose, CA 95113",
-            "owner": "Moore Residence",
-            "lat": 37.3400,
-            "level": "50%",
-            "lng": -121.8800,
-            "_id": "5c7de",
-            "url": "http://nebula.wsimg.com/80b05e843234638ca47ed2544f81a60e?AccessKeyId=041E087EA41AF0FCA5B5&disposition=0&alloworigin=1",
+            "url": "http://media.mlive.com/news/detroit_impact/photo/detroit-library-trash-canjpg-57a93d41a3272222.jpg",
             "__v": 0
         }
+
 ]
 

@@ -1,7 +1,20 @@
 .bar {
     overflow: hidden;
   }
-  
+
+  .boxField {
+      margin-bottom: 1rem;
+  }
+
+  .custom-checkbox .custom-control-input:checked~.custom-control-label::before{
+    
+  }
+
+  :hover:before { 
+    
+  }
+
+ 
   .bar .baritem {
     float: center;
     font-size: 16px;
@@ -14,12 +27,13 @@
     display: inline-block;
     overflow: hidden;
   }
+
+ 
   
   .down .btn {
     font-size: 16px;  
-    border: none;
-    outline: none;
-    color: #485051;
+    
+    color: #4CAF50;
     font-size: 20px;
     background-color: inherit;
     font-family: inherit;
@@ -31,8 +45,8 @@
   }
   .down-content {
     padding-top: 1rem;
-    padding-left: 5%;
-    padding-right: 5%;
+    padding-left: 1%;
+    padding-right: 4%;
     padding-bottom: 15px;
     left: 0;
     position: absolute;

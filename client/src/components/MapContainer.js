@@ -3,6 +3,7 @@ import { Map, GoogleApiWrapper, InfoWindow, Marker } from 'google-maps-react';
 import containers from '../static/test';
 import '../static/Map.css';
 import customStyle from '../static/customStyle.json'
+import axios from 'axios';
 
 const mapStyles = {
   width: '100%',
@@ -22,7 +23,8 @@ export class MapContainer extends Component {
   state = {
     showingInfoWindow: false,
     activeMarker: {},
-    selectedPlace: {}
+    selectedPlace: {},
+    percent: 0
   }
 
   onMarkerClick = (props, marker, e) =>
@@ -60,16 +62,29 @@ export class MapContainer extends Component {
     }
 
   }
+  componentDidMount() {
+    const percent = 250
+    this.setState({ percent });
+    axios.get('http://ec2-54-245-184-179.us-west-2.compute.amazonaws.com/trash_level')
+      .then(res => {
+        console.log(res.data)
+        const percent = res.data;
+        console.log(percent)
+        percent = 50
+        this.setState({ percent });
+      })
+  }
 
   render() {
     
     const markers = []
     var i = 0
     containers.forEach((c) => {
-      const url = this.checkLevel(c)
-      const level = this.percentify(c)
-      console.log(level)
-      
+      const l = this.state.percent 
+      const url = this.checkLevel(l)
+      const level = this.percentify(l)
+      console.log(l)
+      console.log(this.state)
       markers.push(
       <Marker
         icon={url}
@@ -79,15 +94,15 @@ export class MapContainer extends Component {
         description={c.description}
         url={c.url}
         id={c._id}
-        level={level}
-        percent={level}
+        level={l}
+        percent={this.state.percent}
         address={c.address}
         city={c.city}
         owner={c.owner}
         type={c.type}
         position = {{
-          lat: 37.3300 + i,
-          lng: -121.8811
+          lat: 37.3356,
+          lng: -121.885
          }}
       />);
       i = i + .010
@@ -114,9 +129,7 @@ export class MapContainer extends Component {
           visible={this.state.showingInfoWindow}
           onClose={this.onClose}
         >
-          <WindowContent 
-            props={{...container}}
-          />
+          
           <div>
             
             <div className="mapContainer">
@@ -130,6 +143,9 @@ export class MapContainer extends Component {
                   </div>
                   <div className="id">
                     <h5><span className="badge badge-secondary">{this.state.selectedPlace.id}</span></h5>
+                  </div>
+                  <div style={{marginLeft:"1rem"}}>
+                    <button type="button" className="btn btn-outline-success"><i class="fas fa-sync-alt"></i></button>
                   </div>
                 </div>
                 <div>
@@ -148,11 +164,18 @@ export class MapContainer extends Component {
               </div>
             </div>
             <div className="footerContainer">
-            <button type="button" className="btn btn-success">Details</button>
-            <button type="button" className="btn btn-success">Edit</button>
-            <button type="button" className="btn btn-success">Refresh</button>
-            <button type="button" className="btn btn-success">Remove</button>
-            </div>
+
+                <div>
+                <button type="button" className="details btn btn-outline-success">Details</button>
+                </div>
+                <div>
+                <button type="button" className="btn btn-outline-success">Edit</button>
+                </div>
+                <div>
+                  <button type="button" className="btn btn-outline-success">Remove</button>
+                </div>
+              </div>
+
           </div>
         </InfoWindow>
       </Map>
