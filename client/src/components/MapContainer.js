@@ -6,8 +6,17 @@ import customStyle from '../static/customStyle.json'
 
 const mapStyles = {
   width: '100%',
-  height: '100%'
+  height: '100%',
+  
 };
+
+const Control = () => {
+  return(
+    <div>
+      
+    </div>
+  )
+}
 
 export class MapContainer extends Component {
   state = {
@@ -55,7 +64,7 @@ export class MapContainer extends Component {
         position = {{
           lat: 37.3300 + i,
           lng: -121.8811
-         }}
+        }}
       />);
       i = i + .010
     });
@@ -64,6 +73,8 @@ export class MapContainer extends Component {
       
       <Map
         google={this.props.google}
+        mapTypeControl={false}
+        streetViewControl={false}
         zoom={14}
         style={mapStyles}
         styles={customStyle}
@@ -73,6 +84,8 @@ export class MapContainer extends Component {
         }}
       >
         {markers}
+        
+
         
         <InfoWindow
           marker={this.state.activeMarker}
@@ -122,5 +135,5 @@ export class MapContainer extends Component {
 }
 
 export default GoogleApiWrapper({
-  apiKey: ('API_KEY')
+  apiKey: ('AIzaSyDnBifHmtNb87N7huYJyhNIZyFd5gP4zyI')
 })(MapContainer)

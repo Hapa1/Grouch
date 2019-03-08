@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import '../static/Header.css';
-
+import Menu from './Menu';
 class Header extends Component {
   render() {
     return (
-      <div className="container">
-        <button type="button" className="btn btn-success">Success</button>
+      <div>
+        <Menu></Menu>
       </div>
     );
   }

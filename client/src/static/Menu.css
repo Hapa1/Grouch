@@ -1,0 +1,52 @@
+.bar {
+    overflow: hidden;
+  }
+  
+  .bar .baritem {
+    float: center;
+    font-size: 16px;
+    color: white;
+    text-align: center;
+    text-decoration: none;
+  }
+  
+  .down {
+    display: inline-block;
+    overflow: hidden;
+  }
+  
+  .down .btn {
+    font-size: 16px;  
+    border: none;
+    outline: none;
+    color: #485051;
+    font-size: 20px;
+    background-color: inherit;
+    font-family: inherit;
+    margin: 0;
+  }
+  
+  .baritem {
+    color: #485051!important;
+  }
+  .down-content {
+    padding-top: 1rem;
+    padding-left: 5%;
+    padding-right: 5%;
+    padding-bottom: 15px;
+    left: 0;
+    position: absolute;
+    background-color: white;
+    min-width: 160px;
+    box-shadow: 0px 15px 15px 5px rgba(0,0,0,0.2);
+    z-index: 2;
+  }
+  
+  .down-content .baritem {
+    display: block;
+    text-align: left;
+  }
+  
+  .down:hover .down-content {
+    display: block;
+  }
