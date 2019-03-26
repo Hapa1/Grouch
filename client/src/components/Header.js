@@ -6,7 +6,7 @@ class Header extends Component {
     return (
       <div>
         
-        <Menu></Menu>
+        
       </div>
     );
   }

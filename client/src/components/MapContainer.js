@@ -4,6 +4,7 @@ import containers from '../static/test';
 import '../static/Map.css';
 import customStyle from '../static/customStyle.json'
 import axios from 'axios';
+import Menu from './Menu';
 
 const mapStyles = {
   width: '100%',
@@ -109,7 +110,8 @@ export class MapContainer extends Component {
     });
     const container = this.state.selectedPlace
     return (
-      
+      <div>
+      <Menu></Menu>
       <Map
         google={this.props.google}
         zoom={14}
@@ -179,6 +181,7 @@ export class MapContainer extends Component {
           </div>
         </InfoWindow>
       </Map>
+      </div>
     );
   }
 }
