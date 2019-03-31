@@ -1,24 +1,99 @@
 import React, { Component } from 'react';
 import '../static/Menu.css';
+import CheckBox from './CheckBox';
 
 export class Menu extends Component {
 
+   
 
+    constructor(props) {
+        super(props);
+    
+        this.state = {
+          checkedItems: new Map(),
+        }
+    
+        this.handleChange = this.handleChange.bind(this);
+    }
+
+    handleChange(e) {
+        const item = e.target.name;
+        const isChecked = e.target.checked;
+        this.setState(prevState => ({ checkedItems: prevState.checkedItems.set(item, isChecked) }));
+        console.log(this.state.checkedItems)
+    }
+    
     render() {
+        const checkboxes = [
+            {
+              name: 'Solid Rubbish',
+              key: 'Solid Rubbish',
+              label: 'Solid Rubbish',
+            },
+            {
+              name: 'Recyclables',
+              key: 'Recyclables',
+              label: 'Recyclables',
+            },
+            {
+              name: 'Green Waste',
+              key: 'Green Waste',
+              label: 'Green Waste',
+            }
+        ];
+
         return (
-            <div className="down">
+            <div className="down" >
              <button className="btn"><h1>Grouch.io</h1></button>
+
                 <div className="down-content">
-                    
-                    <p>
+                    <form value={this.state.checkedItems}>
+                        <React.Fragment>
+                            {
+                            
+                            checkboxes.map(item => (
+                                
+                                <div key={item.key}>
+                                    {item.name}
+                                    <CheckBox name={item.name} checked={this.state.checkedItems.get(item.name)} onChange={this.handleChange} />
+                                </div>
+                            ))
+                            }
+                        </React.Fragment>
+                        <button onClick={this.props.onChange(this.state.checkedItems)} type="submit" className="btn btn-success">Submit</button>
+                    </form>
+                </div>   
+            </div>
+            
+        )
+       
+    }
+}
+export default Menu
+
+/**
+ * <p>
                         <center><h6>Waste Type</h6></center>
                     </p>
                     <div className="boxField">
                         <div className="form-check">
                             <div class="custom-control custom-checkbox">
                                 <div>
-                                    
-                                        <input type="checkbox" class="custom-control-input" id="customCheck1" name="example1"/>
+                                        <input 
+                                            type="checkbox" 
+                                            id="customCheck1" 
+                                            name="example1" 
+                                            checked={this.state.checked} 
+                                            onChange={this.handleCheckboxChange}
+                                        />
+                                        <input 
+                                            type="checkbox" 
+                                            id="customCheck1" 
+                                            name="example1" 
+                                            checked={this.state.checked} 
+                                            onChange={this.handleCheckboxChange}
+                                        />
+                                        
                                         <div class="row">
                                             <div class="col-9">
                                                 <label class="custom-control-label" for="customCheck1">Rubbish</label>
@@ -125,12 +200,4 @@ export class Menu extends Component {
                         </center>
                     
                     </div>
-                </div>   
-                
-            </div>
-            
-        )
-       
-    }
-}
-export default Menu
+ */

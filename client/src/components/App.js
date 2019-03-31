@@ -3,7 +3,7 @@ import { ApolloProvider } from 'react-apollo';
 import ApolloClient from 'apollo-boost';
 import '../static/App.css';
 import Header from './Header';
-import MapContainer from './MapContainer';
+import MapContainer from './mapComponents/MapContainer';
 import { BrowserRouter, Route, Link } from 'react-router-dom';
 import Dashboard from './Dashboard';
 
