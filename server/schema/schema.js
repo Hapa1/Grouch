@@ -3,6 +3,7 @@ const _ = require('lodash');
 const Container = require('../models/container')
 
 const { 
+    GraphQLFloat,
     GraphQLObjectType, 
     GraphQLString, 
     GraphQLSchema,
@@ -31,8 +32,8 @@ const ContainerType = new GraphQLObjectType({
         address: { type: GraphQLString},
         city: { type: GraphQLString},
         level: { type: GraphQLInt},
-        lat: { type: GraphQLInt},
-        lng: { type: GraphQLInt},
+        lat: { type: GraphQLFloat},
+        lng: { type: GraphQLFloat},
         imgUrl: { type: GraphQLString},
         wasteLevels: { 
             type: GraphQLList(GraphQLInt)

@@ -5,8 +5,11 @@ const getContainersQuery = gql`
         containers{
             name
             id
+            lat
+            lng
             wasteLevels
             wasteTimes
+            type
         }
     }
 `

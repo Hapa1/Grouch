@@ -6,6 +6,7 @@ import customStyle from '../../static/customStyle.json'
 import axios from 'axios';
 import Menu from '../Menu';
 import MarkerInfo from './MarkerInfo';
+import { graphql } from 'react-apollo';
 import { getContainersQuery } from '../../queries/queries'
 
 const mapStyles = {
@@ -26,14 +27,18 @@ export class MapContainer extends Component {
   constructor(props) {
     super(props);
 
+    const initMap = new Object();
+    initMap["Solid Rubbish"] = true;
+    initMap["Recyclables"] = true;
+    initMap["Green Waste"] = true;
+
     this.state = {
       showingInfoWindow: false,
-      boxes: null, 
+      boxes: initMap, 
       activeMarker: {},
       selectedPlace: {},
-      percent: 0
     }
-
+    console.log(initMap)
     this.handleChange = this.handleChange.bind(this);
   }
 
@@ -65,8 +70,8 @@ export class MapContainer extends Component {
   percentify = (container) => {
     return container.level + '%'
   }
-  checkLevel = (container) => {
-    const level = container.level
+  checkLevel = (level) => {
+    
     if (level <= 25) {
       return 'https://s3-us-west-1.amazonaws.com/lootbox1/public/green.png'
     }
@@ -97,42 +102,60 @@ export class MapContainer extends Component {
   render() {
     const markers = []
     var i = 0
-    containers.forEach((c) => {
-      const percentLevel = this.state.percent
-      const url = this.checkLevel(c)
-      var displayedContainers = []
-      if(this.state.boxes){
-        for (let [k,v] of this.state.boxes){
-          if (v == true){
-            displayedContainers.push(k)
+    var data = this.props.data
+    console.log(data)
+    if(data.loading || !data.containers){
+    }
+      
+    else {
+      var containers = data.containers
+      containers.forEach((c) => {
+        var currentLevel = c.wasteLevels[c.wasteLevels.length-1]
+        const url = this.checkLevel(currentLevel)
+        var displayedContainers = []
+        if(this.state.boxes){
+          console.log(this.state.boxes)
+          for (var key in this.state.boxes){
+            console.log(key)
+            if (this.state.boxes[key] == true){
+              displayedContainers.push(key)
+            }
           }
-          
         }
-      }
-      console.log(displayedContainers)
-      markers.push(
-        <Marker
-          icon={url}
-          key={c._id}
-          onClick={this.onMarkerClick}
-          name={c.name}
-          description={c.description}
-          url={c.url}
-          id={c._id}
-          level={percentLevel}
-          percent={this.state.percent}
-          address={c.address}
-          city={c.city}
-          owner={c.owner}
-          type={c.type}
-          position={{
-            lat: 37.3356,
-            lng: -121.885
-          }}
-        />);
-      i = i + .010
-    });
-    const container = this.state.selectedPlace
+        if(displayedContainers.includes(c.type)){
+
+          markers.push(
+            <Marker
+              icon={url}
+              key={c._id}
+              onClick={this.onMarkerClick}
+              name={c.name}
+              description={c.description}
+              url={c.url}
+              id={c._id}
+              level={currentLevel}
+              percent={this.state.percent}
+              address={c.address}
+              city={c.city}
+              owner={c.owner}
+              type={c.type}
+              lat = {c.lat}
+              lng = {c.lng}
+              position={{
+                lat: c.lat,
+                lng: c.lng
+              }}
+            />);
+          console.log(markers)
+        }
+          
+        i = i + .010
+      });
+    }
+    
+    
+    
+    
     return (
       <div>
         <Menu onChange={this.handleChange} value={this.state.boxes}></Menu>
@@ -165,6 +188,8 @@ export class MapContainer extends Component {
     );
   }
 }
+
+MapContainer = graphql(getContainersQuery)(MapContainer);
 
 export default GoogleApiWrapper({
   apiKey: ('AIzaSyDnBifHmtNb87N7huYJyhNIZyFd5gP4zyI')

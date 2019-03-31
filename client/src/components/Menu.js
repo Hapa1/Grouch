@@ -10,7 +10,8 @@ export class Menu extends Component {
         super(props);
     
         this.state = {
-          checkedItems: new Map(),
+         // checkedItems: new Map(),
+            checkedItems: new Object(),
         }
     
         this.handleChange = this.handleChange.bind(this);
@@ -19,8 +20,20 @@ export class Menu extends Component {
     handleChange(e) {
         const item = e.target.name;
         const isChecked = e.target.checked;
-        this.setState(prevState => ({ checkedItems: prevState.checkedItems.set(item, isChecked) }));
-        console.log(this.state.checkedItems)
+        //this.setState(prevState => ({ checkedItems: prevState.checkedItems.set(item, isChecked) }));
+        
+        this.setState(prevState => ({
+            checkedItems: {
+                ...prevState.checkedItems,
+                [item]: isChecked
+            }
+        }))
+        
+        //this.setState({ 
+        //   checkedItems: checkedItems[item] = isChecked
+        //    checkedItems: prevState.checkedItems.set(item, isChecked) 
+        //});
+        //console.log(this.state.checkedItems)
     }
     
     render() {
@@ -55,7 +68,7 @@ export class Menu extends Component {
                                 
                                 <div key={item.key}>
                                     {item.name}
-                                    <CheckBox name={item.name} checked={this.state.checkedItems.get(item.name)} onChange={this.handleChange} />
+                                    <CheckBox name={item.name} checked={this.state.checkedItems[item.name]} onChange={this.handleChange} />
                                 </div>
                             ))
                             }
