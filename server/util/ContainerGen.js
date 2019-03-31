@@ -28,7 +28,7 @@ for (var i = 0; i < 3; i++){
     }
     c = new Container({
         name: "Test" + r1,
-        type: "Solid Rubbish",
+        type: "Recyclables",
         description: "Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum",
         address: "123 Lorem Ipsum St.",
         city: "San Jose CA",
