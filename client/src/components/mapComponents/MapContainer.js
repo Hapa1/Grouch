@@ -10,8 +10,8 @@ import Mark from './Marker';
 import Modal from './Modal';
 import MarkerInfo from './MarkerInfo';
 import ModalForm from './ModalForm'
-import { graphql } from 'react-apollo';
-import { getContainersQuery } from '../../queries/queries'
+import { graphql, withApollo, compose } from 'react-apollo';
+import { getContainersQuery, deleteContainerMutation  } from '../../queries/queries'
 import ReactDOM from 'react-dom';
 
 const mapStyles = {
@@ -49,6 +49,7 @@ export class MapContainer extends Component {
     }
     console.log(initMap)
     this.handleChange = this.handleChange.bind(this);
+    this.removeContainer = this.removeContainer.bind(this);
   }
 
   handleChange = (param) => (e) => {
@@ -135,8 +136,19 @@ export class MapContainer extends Component {
     }
   }
 
-  removeContainer() {
-    console.log("remove")
+  removeContainer(e) {
+    e.preventDefault()
+    console.log(this.props)
+    var id = e.target.id
+    console.log(id)
+    this.setState({
+      showingInfoWindow: false,
+    })
+    this.props.deleteContainerMutation({
+    variables: { id },
+    refetchQueries: [{query: getContainersQuery}]
+    });
+    
   }
 
   onClickClose() {
@@ -151,22 +163,24 @@ export class MapContainer extends Component {
       }
   }
 
+
+
   onInfoWindowOpen(props, e) {
     const info = (
-        <MarkerInfo container={this.state.selectedPlace}/>
+        <MarkerInfo onRemove={this.removeContainer} container={this.state.selectedPlace}/>
     );
     ReactDOM.render(
         React.Children.only(info),
         document.getElementById("iwc")
     );
-    console.log("openeded")
   }
 
 
   render() {
+    console.log(this.props)
     const markers = []
     var i = 0
-    var data = this.props.data
+    var data = this.props.getContainersQuery
     if(data.loading || !data.containers){
     }
       
@@ -188,12 +202,12 @@ export class MapContainer extends Component {
           markers.push(
             <Marker
               icon={url}
-              key={c._id}
+              key={c.id}
               onClick={this.onMarkerClick}
               name={c.name}
               description={c.description}
               url={c.url}
-              id={c._id}
+              id={c.id}
               level={percent}
               percent={this.state.percent}
               address={c.address}
@@ -267,7 +281,12 @@ export class MapContainer extends Component {
   }
 }
 
-MapContainer = graphql(getContainersQuery)(MapContainer);
+MapContainer = compose(
+  graphql(getContainersQuery, { name: "getContainersQuery"}),
+  graphql(deleteContainerMutation, { name: "deleteContainerMutation"})
+)(MapContainer);
+
+//MapContainer = graphql(getContainersQuery)(MapContainer);
 
 export default GoogleApiWrapper({
   apiKey: ('AIzaSyDnBifHmtNb87N7huYJyhNIZyFd5gP4zyI')

@@ -11,6 +11,12 @@ class MarkerInfo extends Component {
 
     handleClick(e) {
       console.log("remove!")
+      var container = this.props.container
+      //this.props.deleteContainerMutation({
+      //  variables: {
+      //    id: this.props.container.id
+      //  }
+      //})
     }
 
     render() {
@@ -60,7 +66,7 @@ class MarkerInfo extends Component {
                     <button type="button" className="btn btn-outline-success">Edit</button>
                 </div>
                 <div >
-                    <button onClick={this.handleClick} type="button" className="btn btn-outline-success">Remove</button>
+                    <button id={container.id} onClick={this.props.onRemove} type="button" className="btn btn-outline-success">Remove</button>
                 </div>
               </div>
         </div>

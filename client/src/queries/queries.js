@@ -25,7 +25,7 @@ const addContainerMutation = gql`
 `
 
 const deleteContainerMutation = gql`
-    mutation($_id: String!) { 
+    mutation($id: ID!) { 
         deleteContainer(_id: $id){
             name
         }

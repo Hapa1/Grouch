@@ -45,7 +45,6 @@ class ModalForm extends Component {
 
     handleSubmit(event) {
         event.preventDefault();
-        console.log(this.state)
         if(this.handleValidation()){
             this.props.addContainerMutation({ //addContainerMutation from export default compose 
                 variables: {
@@ -58,6 +57,7 @@ class ModalForm extends Component {
             })
             var modal = document.getElementById('myModal');
             modal.style.display = "none";
+            this.setState({ name: "", type: "" });
         }
         else {
             console.log("error!")
@@ -66,7 +66,7 @@ class ModalForm extends Component {
     }
 
     render() {
-    
+    console.log(this.state)
     return (
         <form onSubmit={this.handleSubmit}>
         <div>
