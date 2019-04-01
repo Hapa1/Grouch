@@ -1,11 +1,21 @@
 import React, { Component } from 'react';
+import { getContainersQuery, deleteContainerMutation } from '../../queries/queries'
+import { graphql, compose } from 'react-apollo';
+
 class MarkerInfo extends Component {
 
     constructor(props) {
         super(props)
+        this.handleClick = this.handleClick.bind(this);
+    }
+
+    handleClick(e) {
+      console.log("remove!")
     }
 
     render() {
+        
+        
         var container = this.props.container
         return (
         <div>
@@ -49,8 +59,8 @@ class MarkerInfo extends Component {
                 <div>
                     <button type="button" className="btn btn-outline-success">Edit</button>
                 </div>
-                <div>
-                    <button type="button" className="btn btn-outline-success">Remove</button>
+                <div >
+                    <button onClick={this.handleClick} type="button" className="btn btn-outline-success">Remove</button>
                 </div>
               </div>
         </div>

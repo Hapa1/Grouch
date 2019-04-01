@@ -8,10 +8,15 @@ export class Menu extends Component {
 
     constructor(props) {
         super(props);
-    
+        
+        const initMap = new Object();
+        initMap["Solid Rubbish"] = true;
+        initMap["Recyclables"] = true;
+        initMap["Green Waste"] = true;
+
         this.state = {
          // checkedItems: new Map(),
-            checkedItems: new Object(),
+            checkedItems: initMap,
         }
     
         this.handleChange = this.handleChange.bind(this);

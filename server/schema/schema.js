@@ -1,6 +1,7 @@
 const graphql = require('graphql');
 const _ = require('lodash');
 const Container = require('../models/container')
+var moment = require('moment')
 
 const { 
     GraphQLFloat,
@@ -63,6 +64,71 @@ const RootQuery = new GraphQLObjectType({
     }
 })
 
+var r1 = Math.floor(Math.random() * 100);
+var r2 = .0001 * Math.floor(Math.random() * 100);
+var r3 = .0001 * Math.floor(Math.random() * 100);
+var data = []
+var levels = []
+var times = []
+var r = 0
+var rando = Math.floor(Math.random() * 6) + 1;
+for (var i = 0; i < 24; i++){
+    
+    var r = r + Math.floor(Math.random() * rando) + 1;
+    var time = moment().add(i, 'hours').format()
+    //var waste = {
+    //    timeStamp: time,
+    //    wasteLevel: r
+    //}
+    //data.push(waste)
+    times.push(time)
+    levels.push(r)
+}
+
+console.log(levels)
+
+const Mutation = new GraphQLObjectType({ //Create and update 
+    name: 'Mutation',
+    fields: {
+        deleteContainer: {
+            type: ContainerType,
+            args: {
+                _id: {type: new GraphQLNonNull(GraphQLID)}
+            },
+            resolve(parent, args){
+                return Container.remove(args.id)
+            }
+        },
+        addContainer: {
+            type: ContainerType,
+            args: {
+                name: {type: new GraphQLNonNull(GraphQLString)},
+                type: {type: new GraphQLNonNull(GraphQLString)},
+                description: {type: GraphQLString},
+                address: {type: GraphQLString},
+                city: {type: GraphQLString},
+                lat: { type: GraphQLFloat},
+                lng: { type: GraphQLFloat},
+            },
+            resolve(parent, args){//store in database 
+                let container = new Container({ //Mongoose 
+                    name: args.name,
+                    type: args.type,
+                    description: args.description,
+                    address: args.address,
+                    city: args.city,
+                    lat: args.lat,
+                    lng: args.lng,
+                    wasteLevels: levels,
+                    wasteTimes: times,
+                });
+                return container.save();
+            }
+        },
+    }
+});
+
 module.exports = new GraphQLSchema({ 
     query: RootQuery, //determine which query users can use from frontend 
+    mutation: Mutation
 })

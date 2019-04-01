@@ -3,11 +3,16 @@ import { Map, GoogleApiWrapper, InfoWindow, Marker } from 'google-maps-react';
 import containers from '../../static/test';
 import '../../static/Map.css';
 import customStyle from '../../static/customStyle.json'
+import '../../static/Modal.css';
 import axios from 'axios';
 import Menu from '../Menu';
+import Mark from './Marker';
+import Modal from './Modal';
 import MarkerInfo from './MarkerInfo';
+import ModalForm from './ModalForm'
 import { graphql } from 'react-apollo';
 import { getContainersQuery } from '../../queries/queries'
+import ReactDOM from 'react-dom';
 
 const mapStyles = {
   width: '100%',
@@ -37,6 +42,10 @@ export class MapContainer extends Component {
       boxes: initMap, 
       activeMarker: {},
       selectedPlace: {},
+      editing: false,
+      lat: 0,
+      lng: 0,
+      cursor: 'crosshair'
     }
     console.log(initMap)
     this.handleChange = this.handleChange.bind(this);
@@ -44,6 +53,7 @@ export class MapContainer extends Component {
 
   handleChange = (param) => (e) => {
     e.preventDefault();
+    
     this.setState({
       boxes: param,
     })
@@ -51,12 +61,15 @@ export class MapContainer extends Component {
   }
 
 
-  onMarkerClick = (props, marker, e) =>
+
+  onMarkerClick = (props, marker, e) => {
     this.setState({
       selectedPlace: props,
       activeMarker: marker,
       showingInfoWindow: true
     });
+  }
+    
 
   onClose = props => {
     if (this.state.showingInfoWindow) {
@@ -67,8 +80,8 @@ export class MapContainer extends Component {
     }
   }
 
-  percentify = (container) => {
-    return container.level + '%'
+  percentify = (level) => {
+    return level + '%'
   }
   checkLevel = (level) => {
     
@@ -99,11 +112,61 @@ export class MapContainer extends Component {
     //  })
   }
 
+  addMarker = (e) => {
+    e.preventDefault();
+    //var map = document.getElementById('map');
+    //map.style.cursor = "pointer";
+    this.setState({
+      editing: true,
+      cursor: 'crosshair',
+    })
+    console.log("marker1")
+  }
+
+  handleClickedMap = (t, map, coord) => {
+    const { latLng } = coord;
+    const lat = latLng.lat();
+    const lng = latLng.lng();
+    if (this.state.editing == true){
+      var modal = document.getElementById('myModal');
+      modal.style.display = "block";
+      this.setState({lat,lng})
+      console.log(lat,lng)
+    }
+  }
+
+  removeContainer() {
+    console.log("remove")
+  }
+
+  onClickClose() {
+      var modal = document.getElementById('myModal');
+      modal.style.display = "none";
+  }
+
+  onClickAnywhere(e) {
+      var modal = document.getElementById('myModal');
+      if (e.target.id == 'myModal'){
+          modal.style.display = "none";
+      }
+  }
+
+  onInfoWindowOpen(props, e) {
+    const info = (
+        <MarkerInfo container={this.state.selectedPlace}/>
+    );
+    ReactDOM.render(
+        React.Children.only(info),
+        document.getElementById("iwc")
+    );
+    console.log("openeded")
+  }
+
+
   render() {
     const markers = []
     var i = 0
     var data = this.props.data
-    console.log(data)
     if(data.loading || !data.containers){
     }
       
@@ -114,16 +177,14 @@ export class MapContainer extends Component {
         const url = this.checkLevel(currentLevel)
         var displayedContainers = []
         if(this.state.boxes){
-          console.log(this.state.boxes)
           for (var key in this.state.boxes){
-            console.log(key)
             if (this.state.boxes[key] == true){
               displayedContainers.push(key)
             }
           }
         }
         if(displayedContainers.includes(c.type)){
-
+          var percent = this.percentify(currentLevel)
           markers.push(
             <Marker
               icon={url}
@@ -133,7 +194,7 @@ export class MapContainer extends Component {
               description={c.description}
               url={c.url}
               id={c._id}
-              level={currentLevel}
+              level={percent}
               percent={this.state.percent}
               address={c.address}
               city={c.city}
@@ -146,7 +207,6 @@ export class MapContainer extends Component {
                 lng: c.lng
               }}
             />);
-          console.log(markers)
         }
           
         i = i + .010
@@ -158,9 +218,26 @@ export class MapContainer extends Component {
     
     return (
       <div>
+        <div>
+        <button onClick={this.addMarker} className="btn btn-success">Add Marker</button>
+    
+        <div> 
+            <div onClick={this.onClickAnywhere} id="myModal" className="modal">
+            <div className="modal-content" style={{marginTop: '200px'}}>
+                <span onClick={this.onClickClose} className="close">&times;</span>
+            <ModalForm lng={this.state.lng} lat={this.state.lat}></ModalForm>
+            </div>
+            </div>
+        </div>
+        
+        
+        
+        </div>
         <Menu onChange={this.handleChange} value={this.state.boxes}></Menu>
 
         <Map
+          cursor={this.state.cursor}
+          onClick={this.handleClickedMap}
           google={this.props.google}
           zoom={14}
           style={mapStyles}
@@ -178,10 +255,11 @@ export class MapContainer extends Component {
             marker={this.state.activeMarker}
             visible={this.state.showingInfoWindow}
             onClose={this.onClose}
+            onOpen={e => {
+              this.onInfoWindowOpen(this.props, e);
+            }}
           >
-            <MarkerInfo
-              container={this.state.selectedPlace}
-            />
+            <div id="iwc"/>
           </InfoWindow>
         </Map>
       </div>
