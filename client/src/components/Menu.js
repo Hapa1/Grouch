@@ -17,8 +17,9 @@ export class Menu extends Component {
         this.state = {
          // checkedItems: new Map(),
             checkedItems: initMap,
+            menuActive: true,
         }
-    
+        this.toggleMenu = this.toggleMenu.bind(this);
         this.handleChange = this.handleChange.bind(this);
     }
 
@@ -40,7 +41,24 @@ export class Menu extends Component {
         //});
         //console.log(this.state.checkedItems)
     }
-    
+    toggleMenu() {
+        var sideMenu = document.getElementById('sideMenu');
+        if(this.state.menuActive){
+            console.log("remove menu")
+            sideMenu.style.animationName = "slideout";
+            sideMenu.style.marginLeft = "-45%";
+            this.setState({ menuActive: false});
+        }
+        else {
+            console.log("display menu")
+            sideMenu.style.animationName = "slidein"
+            sideMenu.style.display = "block";
+            sideMenu.style.marginLeft = "0%";
+            this.setState({ menuActive: true});
+        }
+        
+    }
+
     render() {
         const checkboxes = [
             {
@@ -62,25 +80,26 @@ export class Menu extends Component {
 
         return (
             <div className="down" >
-             <button className="btn"><h1>Grouch.io</h1></button>
+                <button onClick={this.toggleMenu}>Test</button>       
+                <button className="btn"><h1>Grouch.io</h1></button>
 
-                <div className="down-content">
-                    <form value={this.state.checkedItems}>
-                        <React.Fragment>
-                            {
-                            
-                            checkboxes.map(item => (
+                    <div id="sideMenu" className="down-content">
+                        <form value={this.state.checkedItems}>
+                            <React.Fragment>
+                                {
                                 
-                                <div key={item.key}>
-                                    {item.name}
-                                    <CheckBox name={item.name} checked={this.state.checkedItems[item.name]} onChange={this.handleChange} />
-                                </div>
-                            ))
-                            }
-                        </React.Fragment>
-                        <button onClick={this.props.onChange(this.state.checkedItems)} type="submit" className="btn btn-success">Submit</button>
-                    </form>
-                </div>   
+                                checkboxes.map(item => (
+                                    
+                                    <div key={item.key}>
+                                        {item.name}
+                                        <CheckBox name={item.name} checked={this.state.checkedItems[item.name]} onChange={this.handleChange} />
+                                    </div>
+                                ))
+                                }
+                            </React.Fragment>
+                            <button onClick={this.props.onChange(this.state.checkedItems)} type="submit" className="btn btn-success">Submit</button>
+                        </form>
+                    </div>   
             </div>
             
         )

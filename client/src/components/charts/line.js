@@ -26,7 +26,6 @@ class LineGraph extends Component {
         labels = containers[0].wasteTimes
 
     }
-    console.log(dataset)
     const data = {
         labels,
         datasets: [
@@ -46,4 +45,4 @@ class LineGraph extends Component {
   }
 }
 
-export default graphql(getContainersQuery)(LineGraph);
+export default LineGraph;

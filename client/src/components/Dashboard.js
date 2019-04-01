@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { graphql } from 'react-apollo';
 import { getContainersQuery } from '../queries/queries'
 import Line from './charts/line';
+import Pie from './charts/pie';
 
 class Dashboard extends Component {
 
@@ -26,10 +27,12 @@ class Dashboard extends Component {
         }
     }
     render() {
+        var data = this.props.data;
         return (
         <div>
             My graph
-            <Line></Line>
+            <Line data={data}></Line>
+            <Pie data={data}></Pie>
         </div>
         
         );

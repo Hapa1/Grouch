@@ -44,7 +44,6 @@
     color: #485051!important;
   }
   .down-content {
-    margin-top: 300px;
     padding-top: 1rem;
     padding-left: 1%;
     padding-right: 4%;
@@ -54,9 +53,35 @@
     background-color: white;
     min-width: 160px;
     box-shadow: 0px 15px 15px 5px rgba(0,0,0,0.2);
-    z-index: 2;
+    z-index: 1;
+    height: 100%;
+    animation-duration: 1s
   }
+
+  @keyframes slidein {
+    from {
+      margin-left: -45%;
+      
+    }
   
+    to {
+      margin-left: 0%;
+      
+    }
+  }
+
+  @keyframes slideout {
+    from {
+      margin-left: 0%;
+      
+    }
+  
+    to {
+      margin-left: -45%;
+      
+    }
+  }
+
   .down-content .baritem {
     display: block;
     text-align: left;
