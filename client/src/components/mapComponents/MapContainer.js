@@ -121,7 +121,6 @@ export class MapContainer extends Component {
       editing: true,
       cursor: 'crosshair',
     })
-    console.log("marker1")
   }
 
   handleClickedMap = (t, map, coord) => {
@@ -177,7 +176,6 @@ export class MapContainer extends Component {
 
 
   render() {
-    console.log(this.props)
     const markers = []
     var i = 0
     var data = this.props.getContainersQuery
@@ -233,49 +231,47 @@ export class MapContainer extends Component {
     return (
       <div>
         <div>
-        <button onClick={this.addMarker} className="btn btn-success">Add Marker</button>
-    
-        <div> 
-            <div onClick={this.onClickAnywhere} id="myModal" className="modal">
-            <div className="modal-content" style={{marginTop: '200px'}}>
-                <span onClick={this.onClickClose} className="close">&times;</span>
-            <ModalForm lng={this.state.lng} lat={this.state.lat}></ModalForm>
-            </div>
-            </div>
-        </div>
+          <div> 
+              <div onClick={this.onClickAnywhere} id="myModal" className="modal">
+                <div className="modal-content" style={{marginTop: '200px'}}>
+                    <span onClick={this.onClickClose} className="close">&times;</span>
+                <ModalForm lng={this.state.lng} lat={this.state.lat}></ModalForm>
+                </div>
+              </div>
+          </div>
         
         
         
         </div>
-        <Menu onChange={this.handleChange} value={this.state.boxes}></Menu>
-
-        <Map
-          cursor={this.state.cursor}
-          onClick={this.handleClickedMap}
-          google={this.props.google}
-          zoom={14}
-          style={mapStyles}
-          mapTypeControl={false}
-          streetViewControl={false}
-          styles={customStyle}
-          initialCenter={{
-            lat: 37.3352,
-            lng: -121.8811
-          }}
-        >
-          {markers}
-
-          <InfoWindow
-            marker={this.state.activeMarker}
-            visible={this.state.showingInfoWindow}
-            onClose={this.onClose}
-            onOpen={e => {
-              this.onInfoWindowOpen(this.props, e);
+        <Menu addMarker={this.addMarker} onChange={this.handleChange} value={this.state.boxes}></Menu>
+       
+          <Map
+            cursor={this.state.cursor}
+            onClick={this.handleClickedMap}
+            google={this.props.google}
+            zoom={14}
+            style={mapStyles}
+            mapTypeControl={false}
+            streetViewControl={false}
+            styles={customStyle}
+            initialCenter={{
+              lat: 37.3352,
+              lng: -121.8811
             }}
           >
-            <div id="iwc"/>
-          </InfoWindow>
-        </Map>
+            {markers}
+            <InfoWindow
+              marker={this.state.activeMarker}
+              visible={this.state.showingInfoWindow}
+              onClose={this.onClose}
+              onOpen={e => {
+                this.onInfoWindowOpen(this.props, e);
+              }}
+            >
+              <div id="iwc"/>
+            </InfoWindow>
+          </Map>
+        
       </div>
     );
   }

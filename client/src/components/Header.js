@@ -1,12 +1,17 @@
 import React, { Component } from 'react';
 import '../static/Header.css';
-import Menu from './Menu';
+import { FaBars } from 'react-icons/fa';
+
 class Header extends Component {
   render() {
     return (
-      <div>
-        
-        
+      <div className="flexContainer">
+        <div>
+          <FaBars style={{color:'#28a745'}}onClick={this.props.toggleMenu}/>   
+        </div>
+        <div>
+          Grouch.io
+        </div>  
       </div>
     );
   }

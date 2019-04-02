@@ -25,12 +25,10 @@ class ModalForm extends Component {
         if(!fields["name"]){
             valid = false;
             errors["name"] = "Cannot be empty";
-            console.log("Name cannot be empty")
         }
         if(!fields["type"]){
             valid = false;
             errors["type"] = "Cannot be empty";
-            console.log("Type cannot be empty")
         }
         this.setState({errors});
         return valid
@@ -46,6 +44,8 @@ class ModalForm extends Component {
     handleSubmit(event) {
         event.preventDefault();
         if(this.handleValidation()){
+            console.log(this.props)
+            console.log(this.state)
             this.props.addContainerMutation({ //addContainerMutation from export default compose 
                 variables: {
                     name: this.state.name,
@@ -57,7 +57,6 @@ class ModalForm extends Component {
             })
             var modal = document.getElementById('myModal');
             modal.style.display = "none";
-            this.setState({ name: "", type: "" });
         }
         else {
             console.log("error!")
@@ -66,7 +65,7 @@ class ModalForm extends Component {
     }
 
     render() {
-    console.log(this.state)
+    
     return (
         <form onSubmit={this.handleSubmit}>
         <div>

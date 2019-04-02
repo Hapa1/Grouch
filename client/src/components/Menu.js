@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import '../static/Menu.css';
 import CheckBox from './CheckBox';
-
+import { FaBars } from 'react-icons/fa';
+import Header from './Header';
 export class Menu extends Component {
 
    
@@ -21,6 +22,8 @@ export class Menu extends Component {
         }
         this.toggleMenu = this.toggleMenu.bind(this);
         this.handleChange = this.handleChange.bind(this);
+        //this.addMarker = this.addMarker.bind(this);
+       
     }
 
     handleChange(e) {
@@ -77,19 +80,14 @@ export class Menu extends Component {
               label: 'Green Waste',
             }
         ];
-
         return (
             <div className="down" >
-                <button onClick={this.toggleMenu}>Test</button>       
-                <button className="btn"><h1>Grouch.io</h1></button>
-
+                    <Header toggleMenu={this.toggleMenu} />
                     <div id="sideMenu" className="down-content">
                         <form value={this.state.checkedItems}>
                             <React.Fragment>
                                 {
-                                
                                 checkboxes.map(item => (
-                                    
                                     <div key={item.key}>
                                         {item.name}
                                         <CheckBox name={item.name} checked={this.state.checkedItems[item.name]} onChange={this.handleChange} />
@@ -97,8 +95,12 @@ export class Menu extends Component {
                                 ))
                                 }
                             </React.Fragment>
+                            <div>
+                                <input className="slider" type="range"/>
+                            </div>
                             <button onClick={this.props.onChange(this.state.checkedItems)} type="submit" className="btn btn-success">Submit</button>
                         </form>
+                        <button onClick={this.props.addMarker} type="submit" className="btn btn-success">Add Marker</button>
                     </div>   
             </div>
             

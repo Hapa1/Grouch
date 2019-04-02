@@ -96,7 +96,7 @@ const Mutation = new GraphQLObjectType({ //Create and update
                 _id: {type: new GraphQLNonNull(GraphQLID)}
             },
             resolve(parent, args){
-                return Container.deleteOne(args.id)
+                return Container.findByIdAndRemove(args._id)
             }
         },
         addContainer: {

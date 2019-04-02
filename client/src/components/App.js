@@ -17,9 +17,10 @@ class App extends Component {
       <div className="App">
         <ApolloProvider client={client}>
           <BrowserRouter>
-            <Header></Header>
+            
             <Route exact path="/" component={MapContainer}></Route>
             <Route path="/dashboard" component={Dashboard}></Route>
+            
           </BrowserRouter>
         </ApolloProvider>
       </div>

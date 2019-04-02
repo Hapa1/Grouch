@@ -1,12 +1,14 @@
-
+import '../static/Checkbox.css';
 import React from 'react';
 import PropTypes from 'prop-types';
+import { FaCheckSquare, FaRegSquare } from 'react-icons/fa';
 
-const CheckBox = ({ type = 'checkbox', name, checked = false, onChange }) => (
-  
-      <input type={type} name={name} checked={checked} onChange={onChange} />
-  
-  
+const CheckBox = ({ type = 'checkbox', name, checked = false, onChange }) => 
+    (
+    
+    <div>
+        <input id={name} className="regular-checkbox" type={type} name={name} checked={checked} onChange={onChange} /><label for={name}></label>
+    </div>
 );
 
 CheckBox.propTypes = {
