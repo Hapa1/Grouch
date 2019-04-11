@@ -1,9 +1,23 @@
 .flexContainer {
     display: flex;
+    z-index: 2;
+    position:absolute;
+    background-color: white;
+    width: 100%;
+    justify-content: space-between;
 }
 
-.item {
-    margin-right: 10px
+.groupContainer {
+    display: flex;
+}
+
+.navItem {
+    margin-right: 12.5px;
+    margin-bottom: 5px;
+}
+
+.navButton {
+    border-color: white !important;
 }
 
 .App-logo {
