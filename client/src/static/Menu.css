@@ -29,7 +29,6 @@
   }
   
   .down {
-    display: inline-block;
     overflow: hidden;
   }
 
@@ -39,7 +38,7 @@
     font-size: 16px;  
     
     color: #4CAF50;
-    font-size: 20px;
+    
     background-color: inherit;
     font-family: inherit;
     margin: 0;
@@ -49,7 +48,7 @@
     color: #485051!important;
   }
   .down-content {
-    padding-top: 1rem;
+    padding-top: 5rem;
     padding-left: 1%;
     padding-right: 4%;
     padding-bottom: 15px;
