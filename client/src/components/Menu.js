@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import '../static/Menu.css';
 import CheckBox from './CheckBox';
 import { FaBars } from 'react-icons/fa';
-import Header from './Header';
+
 export class Menu extends Component {
 
    
@@ -19,9 +19,11 @@ export class Menu extends Component {
          // checkedItems: new Map(),
             checkedItems: initMap,
             menuActive: true,
+            sliderValue: 50,
         }
         this.toggleMenu = this.toggleMenu.bind(this);
         this.handleChange = this.handleChange.bind(this);
+        this.sliderChange = this.sliderChange.bind(this);
         //this.addMarker = this.addMarker.bind(this);
        
     }
@@ -35,16 +37,12 @@ export class Menu extends Component {
             checkedItems: {
                 ...prevState.checkedItems,
                 [item]: isChecked
-            }
+            },
+            
         }))
-        
-        //this.setState({ 
-        //   checkedItems: checkedItems[item] = isChecked
-        //    checkedItems: prevState.checkedItems.set(item, isChecked) 
-        //});
-        //console.log(this.state.checkedItems)
     }
     toggleMenu() {
+        console.log(this)
         var sideMenu = document.getElementById('sideMenu');
         if(this.state.menuActive){
             console.log("remove menu")
@@ -60,6 +58,11 @@ export class Menu extends Component {
             this.setState({ menuActive: true});
         }
         
+    }
+
+    sliderChange(event) {
+        this.setState({sliderValue: event.target.value});
+        console.log(this.state.sliderValue)
     }
 
     render() {
@@ -81,23 +84,26 @@ export class Menu extends Component {
             }
         ];
         return (
-            <div className="down" >
-                    <Header toggleMenu={this.toggleMenu} />
+            <div className="down">
+                    
                     <div id="sideMenu" className="down-content">
                         <form value={this.state.checkedItems}>
                             <React.Fragment>
                                 {
                                 checkboxes.map(item => (
-                                    <div key={item.key}>
-                                        {item.name}
-                                        <CheckBox name={item.name} checked={this.state.checkedItems[item.name]} onChange={this.handleChange} />
+                                    <div className="checkContainer" key={item.key}>
+                                        <div>
+                                            <CheckBox name={item.name} checked={this.state.checkedItems[item.name]} onChange={this.handleChange} />
+                                        </div>
+                                        <div>
+                                            {item.name}
+                                        </div>
                                     </div>
                                 ))
                                 }
                             </React.Fragment>
-                            <div>
-                                <input className="slider" type="range"/>
-                            </div>
+                            
+                            
                             <button onClick={this.props.onChange(this.state.checkedItems)} type="submit" className="btn btn-success">Submit</button>
                         </form>
                         <button onClick={this.props.addMarker} type="submit" className="btn btn-success">Add Marker</button>
@@ -111,6 +117,18 @@ export class Menu extends Component {
 export default Menu
 
 /**
+ * <Header toggleMenu={this.toggleMenu} />
+ * 
+ * Slider code
+ * 
+ * 
+ * <div>
+                                <input name="wasteLevel" id="slider" value={this.state.value} onChange={this.sliderChange} min="0" max="100" className="slider" type="range"/>
+    </div>
+
+
+    Trash
+
  * <p>
                         <center><h6>Waste Type</h6></center>
                     </p>
