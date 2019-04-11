@@ -12,6 +12,7 @@ import MarkerInfo from './MarkerInfo';
 import ModalForm from './ModalForm'
 import { graphql, withApollo, compose } from 'react-apollo';
 import { getContainersQuery, deleteContainerMutation  } from '../../queries/queries'
+import Header from '../Header';
 import ReactDOM from 'react-dom';
 
 const mapStyles = {
@@ -38,6 +39,7 @@ export class MapContainer extends Component {
     initMap["Green Waste"] = true;
 
     this.state = {
+      menuActive: true,
       showingInfoWindow: false,
       boxes: initMap, 
       activeMarker: {},
@@ -50,9 +52,30 @@ export class MapContainer extends Component {
     console.log(initMap)
     this.handleChange = this.handleChange.bind(this);
     this.removeContainer = this.removeContainer.bind(this);
+    this.toggleMenu = this.toggleMenu.bind(this);
+  }
+
+  toggleMenu() {
+    console.log(this)
+    var sideMenu = document.getElementById('sideMenu');
+    if(this.state.menuActive){
+        console.log("remove menu")
+        sideMenu.style.animationName = "slideout";
+        sideMenu.style.marginLeft = "-45%";
+        this.setState({ menuActive: false});
+    }
+    else {
+        console.log("display menu")
+        sideMenu.style.animationName = "slidein"
+        sideMenu.style.display = "block";
+        sideMenu.style.marginLeft = "0%";
+        this.setState({ menuActive: true});
+    }
+    
   }
 
   handleChange = (param) => (e) => {
+    console.log("Submitted")
     e.preventDefault();
     
     this.setState({
@@ -220,9 +243,10 @@ export class MapContainer extends Component {
               }}
             />);
         }
-          
+        
         i = i + .010
       });
+      console.log(markers)
     }
     
     
@@ -231,21 +255,17 @@ export class MapContainer extends Component {
     return (
       <div>
         <div>
-          <div> 
               <div onClick={this.onClickAnywhere} id="myModal" className="modal">
                 <div className="modal-content" style={{marginTop: '200px'}}>
-                    <span onClick={this.onClickClose} className="close">&times;</span>
-                <ModalForm lng={this.state.lng} lat={this.state.lat}></ModalForm>
+                  <span onClick={this.onClickClose} className="close">&times;</span>
+                  <ModalForm lng={this.state.lng} lat={this.state.lat}></ModalForm>
                 </div>
               </div>
-          </div>
-        
-        
-        
         </div>
-        <Menu addMarker={this.addMarker} onChange={this.handleChange} value={this.state.boxes}></Menu>
-       
-          <Map
+        <Menu addMarker={this.addMarker} onChange={this.handleChange} value={this.state.boxes}/>
+        <Header toggleMenu={this.toggleMenu} className="headerDisplay"/>
+        <Map
+            className="mapStyle"
             cursor={this.state.cursor}
             onClick={this.handleClickedMap}
             google={this.props.google}
@@ -258,20 +278,19 @@ export class MapContainer extends Component {
               lat: 37.3352,
               lng: -121.8811
             }}
+        >
+          {markers}
+          <InfoWindow
+            marker={this.state.activeMarker}
+            visible={this.state.showingInfoWindow}
+            onClose={this.onClose}
+            onOpen={e => {
+              this.onInfoWindowOpen(this.props, e);
+            }}
           >
-            {markers}
-            <InfoWindow
-              marker={this.state.activeMarker}
-              visible={this.state.showingInfoWindow}
-              onClose={this.onClose}
-              onOpen={e => {
-                this.onInfoWindowOpen(this.props, e);
-              }}
-            >
-              <div id="iwc"/>
+          <div id="iwc"/>
             </InfoWindow>
-          </Map>
-        
+        </Map>  
       </div>
     );
   }
