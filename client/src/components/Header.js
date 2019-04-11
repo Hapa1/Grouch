@@ -1,17 +1,23 @@
 import React, { Component } from 'react';
 import '../static/Header.css';
-import { FaBars } from 'react-icons/fa';
+import { FaBars, FaChartLine } from 'react-icons/fa';
 
 class Header extends Component {
   render() {
     return (
       <div className="flexContainer">
-        <div>
-          <FaBars style={{color:'#28a745'}}onClick={this.props.toggleMenu}/>   
-        </div>
-        <div>
-          Grouch.io
-        </div>  
+          <div style={{color:'#28a745', marginLeft: '15px', marginTop: '8px'}} className="navItem">
+            <FaBars style={{marginBottom: '9px', fontSize: '20px'}} className="navItem" onClick={this.props.toggleMenu}/>   
+            <span style={{fontSize: '28px'}} className="navItem" >Grouch.io</span>
+          </div>
+          <div className="groupContainer" style={{color:'#28a745', marginLeft: '15px', marginTop: '15px', marginRight: '25px'}}>
+            <div style={{marginTop: '8px'}} className="navItem">
+              Welcome Admin!
+            </div>
+            <div className="navItem">
+              <button className="btn btn-outline-success navButton"><FaChartLine/> Dashboard</button>
+            </div>
+          </div>
       </div>
     );
   }
