@@ -44,7 +44,7 @@ class MarkerInfo extends Component {
                   </div>
                 </div>
                 <div>
-                  <h6>{container.type}</h6>
+                  <h6>{container.ctype} of {container.type}</h6>
                 </div>
                 <div className="progress" style={{marginBottom: ".5rem"}}>
                   <div className="progress-bar bg-success progress-bar-striped" style={{width: container.level}}></div>

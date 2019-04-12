@@ -10,6 +10,8 @@ const getContainersQuery = gql`
             wasteLevels
             wasteTimes
             type
+            imgUrl
+            ctype
         }
     }
 `

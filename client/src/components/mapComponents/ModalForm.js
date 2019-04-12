@@ -57,7 +57,7 @@ class ModalForm extends Component {
                 variables: {
                     name: this.state.name,
                     type: this.state.type,
-                    ctype: this.state.type,
+                    ctype: this.state.ctype,
                     id: this.state.id,
                     lat: this.props.lat,
                     lng: this.props.lng,
@@ -78,23 +78,27 @@ class ModalForm extends Component {
     return (
         <form onSubmit={this.handleSubmit}>
         <div className="formFlex">
-            <div>
-                <div className="leftFlex">
+            <div style={{marginTop:'35px', marginLeft:'25px',marginRight:'100px'}}>
+                <div style={{marginTop:'10px'}}  >
                     
-                    <div className="label">Device ID</div>
+                    <div>Device ID</div>
                     <div><input onChange={this.handleChange.bind(this, "id")} type="text" name="id"/></div>
                     
                     {this.state.errors["id"]}
                 </div>
-                <div>
-                    <div className="label">Name</div>
+                <div style={{marginTop:'10px'}} >
+                    <div>Add a Friendly Name</div>
                         
                     <div><input onChange={this.handleChange.bind(this, "name")} type="text" name="name"/>
                     </div>
 
                     {this.state.errors["name"]}
                 </div>
+                <div style={{marginTop:'15px'}}>
+                    <center><input type="submit" className="btn btn-success" value="Submit" /></center>
+                </div>
             </div>
+            
         <div>
             <div>
                 <label>
@@ -134,7 +138,7 @@ class ModalForm extends Component {
             </div>
         </div>
         </div>
-                <input type="submit" value="Submit" />
+                
         </form>
     );
   }

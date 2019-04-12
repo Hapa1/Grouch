@@ -228,6 +228,7 @@ export class MapContainer extends Component {
       
     else {
       var containers = data.containers
+      console.log(containers.ctype)
       containers.forEach((c) => {
         var currentLevel = c.wasteLevels[c.wasteLevels.length-1]
         const url = this.checkLevel(currentLevel)
@@ -239,16 +240,18 @@ export class MapContainer extends Component {
             }
           }
         }
+        console.log(c.imgUrl)
         if(displayedContainers.includes(c.type)){
           var percent = this.percentify(currentLevel)
           markers.push(
             <Marker
+              ctype = {c.ctype}
               icon={url}
               key={c.id}
               onClick={this.onMarkerClick}
               name={c.name}
               description={c.description}
-              url={c.url}
+              url={c.imgUrl}
               id={c.id}
               level={percent}
               percent={this.state.percent}

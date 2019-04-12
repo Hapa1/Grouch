@@ -102,11 +102,11 @@ export class Menu extends Component {
                                 ))
                                 }
                             </React.Fragment>
-                            
-                            
-                            <button onClick={this.props.onChange(this.state.checkedItems)} type="submit" className="btn btn-success">Submit</button>
+                            <center><button style={{marginTop: '15px'}} onClick={this.props.addMarker} type="submit" className="btn btn-success">Add Marker</button></center>
+                            <center><button style={{marginTop: '15px'}} onClick={this.props.onChange(this.state.checkedItems)} type="submit" className="btn btn-success">Update Map</button></center>
+                                
                         </form>
-                        <button onClick={this.props.addMarker} type="submit" className="btn btn-success">Add Marker</button>
+                        
                     </div>   
             </div>
             

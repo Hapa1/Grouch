@@ -4,6 +4,7 @@ import { graphql } from 'react-apollo';
 import { getContainersQuery } from '../../queries/queries'
 import moment from 'moment'
 import { getDirectivesFromDocument } from 'apollo-utilities';
+
 class LineGraph extends Component {
   constructor (props){
     super(props);
@@ -62,7 +63,7 @@ class LineGraph extends Component {
     return sum;
   }
 
-    getSum(arr){
+  getSum(arr){
   
     var d = {}
     let keys = Object.keys(arr);
@@ -107,84 +108,7 @@ class LineGraph extends Component {
   //2019-04-11, 21:43:23
   render() {
     var labels = []
-    var data = this.props.data;
-    if(data.loading){
-        
-    } else {
-        var dataset = new Array(24)
-        var containerData = []
-        var greenData = []
-        var rubbishData = []
-        var recycleData = []
-        var d = {}
-        const containers = data.containers
-        var times = []
-        containers.forEach( container => {
-            //console.log(container.wasteTimes[0])
-            //console.log(this.convertTime(container.wasteTimes[0]))
-            labels = this.getLabels(this.convertTime(container.wasteTimes[0]),this.convertTime(container.wasteTimes[23]));
-            //console.log(labels)
-            var green = 0
-            var recy = 0
-            var trash = 0
-            var total = 0
-            for (var i = 0; i < container.wasteLevels.length; i++){
-                if (isNaN(dataset[i])){
-                    dataset[i] = 0
-                }
-                
-
-
-                  var timestamp = this.convertTime(container.wasteTimes[i])
-                  times.push(timestamp)
-                  var date = this.convertFromSeconds(timestamp)
-                  //greenData[i] = greenData[i] + container.wasteLevels[i]
-                  //console.log(greenData)
-                  //console.log(container)
-                  if (container.type == "Green Waste"){
-           
-                    greenData.push({
-                      x: container.wasteTimes[i],
-                      seconds: timestamp,
-                      y: container.wasteLevels[i],
-                      id: container.id,
-                      level: container.wasteLevels[i],
-                      date
-                    })
-                  }
-                  if (container.type == "Solid Rubbish"){
-        
-                    rubbishData.push({
-                      x: container.wasteTimes[i],
-                      seconds: timestamp,
-                      y: container.wasteLevels[i],
-                      id: container.id,
-                      level: container.wasteLevels[i],
-                      date
-                    })
-                  }
-                  if (container.type == "Recyclables"){
-                    recycleData.push({
-                      x: container.wasteTimes[i],
-                      seconds: timestamp,
-                      y: container.wasteLevels[i],
-                      id: container.id,
-                      level: container.wasteLevels[i],
-                    })
-                  }
-                    
-                  
-                
-            }
-            
-        })
-
-  
-       var green = (this.getSum(greenData))
-       var rubbish = (this.getSum(rubbishData))
-       var recycle = (this.getSum(recycleData))
-
-    }
+    console.log(this.props.data[0])
     const options = {
       scales: {
         xAxes: [{
@@ -208,19 +132,19 @@ class LineGraph extends Component {
         datasets: [
           {
             label: 'Green Waste',
-            data: green,
+            data: this.props.data[0],
             fill: false,          // Don't fill area under the line
             borderColor: '#7ac37a'  // Line color
           },
           {
             label: 'Solid Rubbish',
-            data: rubbish,
+            data: this.props.data[1],
             fill: false,          // Don't fill area under the line
             borderColor: '#fab277'  // Line color
           },
           {
             label: 'Recyclables',
-            data: recycle,
+            data: this.props.data[2],
             fill: false,          // Don't fill area under the line
             borderColor: '#69d3fb'  // Line color
           }
