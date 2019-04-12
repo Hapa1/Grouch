@@ -1,0 +1,43 @@
+.barContainer {
+    display: flex;
+    justify-content: center;
+}
+
+.keyContainer {
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.elementContainer {
+    display: flex;
+    justify-content: center;
+    margin: 5px;
+}
+
+.Tag {
+    margin-left: 0.75rem;
+    margin-top: 1.5px;
+}
+
+.Segment {
+    
+    height: 2rem;
+}
+
+.Left {
+    -webkit-border-top-left-radius: 10px;
+    -webkit-border-bottom-left-radius: 10px;
+    -moz-border-radius-topleft: 10px;
+    -moz-border-radius-bottomleft: 10px;
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;
+}
+
+.Right {
+    -webkit-border-top-right-radius: 10px;
+    -webkit-border-bottom-right-radius: 10px;
+    -moz-border-radius-topright: 10px;
+    -moz-border-radius-bottomright: 10px;
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
+}

@@ -75,13 +75,14 @@ var rando = Math.floor(Math.random() * 6) + 1;
 for (var i = 0; i < 24; i++){
     
     var r = r + Math.floor(Math.random() * rando) + 1;
-    var time = moment().add(i, 'hours').format()
+    var time = moment().add(i, 'hours').format("YYYY-MM-DD HH:mm:ss")
     //var waste = {
     //    timeStamp: time,
     //    wasteLevel: r
     //}
     //data.push(waste)
     times.push(time)
+    console.log(time)
     levels.push(r)
 }
 

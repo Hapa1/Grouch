@@ -15,7 +15,7 @@ class PieChart extends Component {
         var typeData = []
         const containers = data.containers
         containers.forEach( container => {
-            console.log(container.type)
+            //console.log(container.type)
             if (container.type == 'Green Waste') { greenWaste++ }
             if (container.type == 'Solid Rubbish') { solidRubbish++ }
             if (container.type == 'Recyclables') { recyclables++ }
@@ -25,10 +25,19 @@ class PieChart extends Component {
         typeData.push(greenWaste)
 
     }
+    const options = {
+        layout: {
+          padding: {
+              left: 50,
+              top: 0,
+              bottom: 0
+        }
+      }
+      }
     data = {
         datasets: [{
             data: typeData,
-            backgroundColor: ["#3e95cd", "#8e5ea2","#3cba9f"],
+            backgroundColor: ["#f9b079", "#67d0ee", "#79c47f"],
         }],
     
         // These labels appear in the legend and in the tooltips when hovering different arcs
@@ -39,7 +48,10 @@ class PieChart extends Component {
         ],
     };
     return (
-        <Pie data={data} />
+        <Pie data={data}
+        options={options}
+        
+        />
     );
   }
 }

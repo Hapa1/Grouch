@@ -1,0 +1,71 @@
+.Box {
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  margin: 30px;
+}
+
+.Line {
+  display: flex;
+  justify-content: space-between;
+  padding: 25px
+}
+
+.Pie {
+  display: flex;
+  justify-content: space-between;
+  padding: 25px
+}
+.dash {
+    position: fixed;
+    z-index: 2;
+    background-color: white;
+    padding-top: 5rem;
+    animation-duration: 1s;
+    height: 100%;
+    width: 100%;
+    left: 0;
+    margin-left: 110%;
+    animation-fill-mode: forwards;
+}
+
+.graphContainer {
+  display: flex;
+  justify-content: center
+}
+
+.rowContainer {
+  display: flex;
+}
+
+.Content {
+  padding: 25px;
+  width: 75%;
+}
+
+.statContainer {
+  display: flex;
+  justify-content: center
+}
+
+@keyframes slidein2 {
+    from {
+        margin-left: 110%;
+      
+    }
+  
+    to {
+        margin-left: 0%;
+      
+    }
+  }
+
+  @keyframes slideout2 {
+    from {
+      margin-left: 0%;
+      
+    }
+  
+    to {
+      margin-left: 110%;
+      
+    }
+  }

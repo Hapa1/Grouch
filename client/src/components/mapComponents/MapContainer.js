@@ -6,14 +6,13 @@ import customStyle from '../../static/customStyle.json'
 import '../../static/Modal.css';
 import axios from 'axios';
 import Menu from '../Menu';
-import Mark from './Marker';
-import Modal from './Modal';
 import MarkerInfo from './MarkerInfo';
 import ModalForm from './ModalForm'
 import { graphql, withApollo, compose } from 'react-apollo';
 import { getContainersQuery, deleteContainerMutation  } from '../../queries/queries'
 import Header from '../Header';
 import ReactDOM from 'react-dom';
+import Dashboard from '../Dashboard';
 
 const mapStyles = {
   width: '100%',
@@ -40,6 +39,7 @@ export class MapContainer extends Component {
 
     this.state = {
       menuActive: true,
+      dashActive: false,
       showingInfoWindow: false,
       boxes: initMap, 
       activeMarker: {},
@@ -53,20 +53,41 @@ export class MapContainer extends Component {
     this.handleChange = this.handleChange.bind(this);
     this.removeContainer = this.removeContainer.bind(this);
     this.toggleMenu = this.toggleMenu.bind(this);
+    this.toggleDash = this.toggleDash.bind(this);
   }
-
+  toggleDash() {
+    console.log("toggle")
+    var sideDash = document.getElementById('dashboard');
+    
+    if(this.state.dashActive){
+      console.log("remove dash")
+      sideDash.style.animationName = "slideout2";
+      sideDash.style.display = "block";
+      sideDash.style.marginleft = "200%";
+      sideDash.style.overflow = "hidden";
+      console.log(sideDash)
+      this.setState({ dashActive: false});
+  }
+  else {
+      console.log("display dash")
+      sideDash.style.animationName = "slidein2"
+      sideDash.style.marginleft = "50%";
+      sideDash.style.overflow = "hidden";
+      console.log(sideDash)
+      this.setState({ dashActive: true});
+  }
+  }
   toggleMenu() {
-    console.log(this)
     var sideMenu = document.getElementById('sideMenu');
     if(this.state.menuActive){
         console.log("remove menu")
-        sideMenu.style.animationName = "slideout";
+        sideMenu.style.animationName = "slideout1";
         sideMenu.style.marginLeft = "-45%";
         this.setState({ menuActive: false});
     }
     else {
         console.log("display menu")
-        sideMenu.style.animationName = "slidein"
+        sideMenu.style.animationName = "slidein1"
         sideMenu.style.display = "block";
         sideMenu.style.marginLeft = "0%";
         this.setState({ menuActive: true});
@@ -263,7 +284,9 @@ export class MapContainer extends Component {
               </div>
         </div>
         <Menu addMarker={this.addMarker} onChange={this.handleChange} value={this.state.boxes}/>
-        <Header toggleMenu={this.toggleMenu} className="headerDisplay"/>
+        
+        <Header toggleDash={this.toggleDash} toggleMenu={this.toggleMenu} className="headerDisplay"/>
+        <Dashboard></Dashboard>
         <Map
             className="mapStyle"
             cursor={this.state.cursor}

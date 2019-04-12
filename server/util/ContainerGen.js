@@ -24,6 +24,7 @@ for (var i = 0; i < 3; i++){
         //}
         //data.push(waste)
         times.push(time)
+        console.log(time)
         levels.push(r)
     }
     c = new Container({
@@ -38,6 +39,5 @@ for (var i = 0; i < 3; i++){
         wasteLevels: levels,
         wasteTimes: times
     })
-    console.log(c)
     c.save()
 }
