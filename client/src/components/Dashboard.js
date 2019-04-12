@@ -153,7 +153,7 @@ class Dashboard extends Component {
             containers.forEach( container => {
                 //console.log(container.wasteTimes[0])
                 //console.log(this.convertTime(container.wasteTimes[0]))
-                labels = this.getLabels(this.convertTime(container.wasteTimes[0]),this.convertTime(container.wasteTimes[23]));
+                labels = this.getLabels(this.convertTime(container.wasteTimes[0]),this.convertTime(container.wasteTimes[container.wasteTimes.length-1]));
                 //console.log(labels)
                 var green = 0
                 var recy = 0
@@ -173,8 +173,10 @@ class Dashboard extends Component {
                   }
                 for (var i = 0; i < container.wasteLevels.length; i++){
                     
-    
-    
+                    console.log(container.wasteLevels.length)
+                    console.log(container.wasteLevels.length)
+                     console.log(container.wasteLevels[i], container.wasteTimes[i])
+                     console.log()
                       var timestamp = this.convertTime(container.wasteTimes[i])
                       times.push(timestamp)
                       var date = this.convertFromSeconds(timestamp)

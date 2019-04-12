@@ -95,11 +95,33 @@ const Mutation = new GraphQLObjectType({ //Create and update
         deleteContainer: {
             type: ContainerType,
             args: {
-                _id: {type: new GraphQLNonNull(GraphQLID)}
+                _id: {type: new GraphQLNonNull(GraphQLID)},
+                
             },
             resolve(parent, args){
                 return Container.findByIdAndRemove(args._id)
             }
+        },
+        updateContainer: {
+            type: ContainerType,
+            args: {
+                _id: {type: new GraphQLNonNull(GraphQLID)},
+                level: {type: GraphQLInt}
+            },
+            resolve(parent, args){
+                
+                Container.update({_id: args._id}, {
+                    $push: {wasteLevels: args.level, wasteTimes: moment().format("YYYY-MM-DD HH:mm:ss")},
+                }).then(c => {
+                    
+                    console.log(c);
+                    return
+                }).catch(err => {
+                    console.log(err);
+                })
+               
+            }
+
         },
         addContainer: {
             type: ContainerType,
@@ -115,8 +137,24 @@ const Mutation = new GraphQLObjectType({ //Create and update
                 lng: { type: GraphQLFloat},
             },
             resolve(parent, args){//store in database 
+                console.log("type", args.ctype)
+                var url = ""
+                if (args.ctype == "Large bin"){
+                    url = 'https://s3-us-west-1.amazonaws.com/lootbox1/public/medium.png'
+                }
+                if (args.ctype == "Medium Can"){
+                    url = 'https://s3-us-west-1.amazonaws.com/lootbox1/public/Large.png'
+                }
+                if (args.ctype == "Small Container"){
+                    url = 'https://s3-us-west-1.amazonaws.com/lootbox1/public/Small.png'
+                }
+                else {
+                    url = 'https://s3-us-west-1.amazonaws.com/lootbox1/public/medium.png'
+                }
+                console.log("url", url)
                 let container = new Container({ //Mongoose 
                     name: args.name,
+                    ctype: args.ctype,
                     type: args.type,
                     description: args.description,
                     address: args.address,
@@ -125,8 +163,12 @@ const Mutation = new GraphQLObjectType({ //Create and update
                     lng: args.lng,
                     wasteLevels: levels,
                     wasteTimes: times,
+                    imgUrl: url,
                 });
+                console.log(args.ctype)
+                console.log(container)
                 return container.save();
+                
             }
         },
     }

@@ -6,6 +6,7 @@ const containerSchema = new Schema({
     type: String,
     description: String,
     address: String,
+    ctype: String,
     city: String,
     level: Number,
     lat: Number,
