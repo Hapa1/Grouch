@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { graphql, compose } from 'react-apollo';
 import { addContainerMutation, getContainersQuery } from '../../queries/queries';
+import '../../static/ModalForm.css';
 
 class ModalForm extends Component {
 
@@ -30,6 +31,14 @@ class ModalForm extends Component {
             valid = false;
             errors["type"] = "Cannot be empty";
         }
+        if(!fields["id"]){
+            valid = false;
+            errors["id"] = "Cannot be empty";
+        }
+        if(!fields["ctype"]){
+            valid = false;
+            errors["ctype"] = "Cannot be empty";
+        }
         this.setState({errors});
         return valid
     }
@@ -44,12 +53,12 @@ class ModalForm extends Component {
     handleSubmit(event) {
         event.preventDefault();
         if(this.handleValidation()){
-            console.log(this.props)
-            console.log(this.state)
             this.props.addContainerMutation({ //addContainerMutation from export default compose 
                 variables: {
                     name: this.state.name,
                     type: this.state.type,
+                    ctype: this.state.type,
+                    id: this.state.id,
                     lat: this.props.lat,
                     lng: this.props.lng,
                 },
@@ -68,19 +77,62 @@ class ModalForm extends Component {
     
     return (
         <form onSubmit={this.handleSubmit}>
+        <div className="formFlex">
+            <div>
+                <div className="leftFlex">
+                    
+                    <div className="label">Device ID</div>
+                    <div><input onChange={this.handleChange.bind(this, "id")} type="text" name="id"/></div>
+                    
+                    {this.state.errors["id"]}
+                </div>
+                <div>
+                    <div className="label">Name</div>
+                        
+                    <div><input onChange={this.handleChange.bind(this, "name")} type="text" name="name"/>
+                    </div>
+
+                    {this.state.errors["name"]}
+                </div>
+            </div>
         <div>
-            <label>
-                Name:
-                <input onChange={this.handleChange.bind(this, "name")} type="text" name="name"/>
-            </label>
-            {this.state.errors["name"]}
+            <div>
+                <label>
+                    Waste Type
+                    <label class="container">
+                        <input onChange={this.handleChange.bind(this, "type")} type="radio" name="type" value="Solid Rubbish"/>Solid Rubbish
+                        <span className="checkmark"></span>
+                    </label>
+                    <label class="container">
+                        <input onChange={this.handleChange.bind(this, "type")} type="radio" name="type" value="Green Waste"/> Green Waste
+                        <span className="checkmark"></span>
+                    </label>
+                    <label class="container">
+                        <input onChange={this.handleChange.bind(this, "type")} type="radio" name="type" value="Recyclables"/>Recyclables
+                        <span className="checkmark"></span>
+                    </label>
+                </label>
+                {this.state.errors["type"]}
+            </div>
+            <div>
+                <label>
+                    Container Type
+                    <label class="container">
+                        <input onChange={this.handleChange.bind(this, "ctype")} type="radio" name="ctype" value="Large Bin"/>Large Bin
+                        <span className="checkmark"></span>
+                    </label>
+                    <label class="container">
+                        <input onChange={this.handleChange.bind(this, "ctype")} type="radio" name="ctype" value="Medium Can"/>Medium Can
+                        <span className="checkmark"></span>
+                    </label>
+                    <label class="container">
+                        <input onChange={this.handleChange.bind(this, "ctype")} type="radio" name="ctype" value="Small Container"/>Small Container
+                        <span className="checkmark"></span>
+                    </label>
+                    {this.state.errors["ctype"]}
+                </label>
+            </div>
         </div>
-        <div>
-            <label>
-                Type:
-                <input onChange={this.handleChange.bind(this, "type")} type="text" name="type"/>
-            </label>
-            {this.state.errors["type"]}
         </div>
                 <input type="submit" value="Submit" />
         </form>

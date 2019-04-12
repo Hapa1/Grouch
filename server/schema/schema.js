@@ -29,6 +29,7 @@ const ContainerType = new GraphQLObjectType({
         id: { type: GraphQLString},
         name: { type: GraphQLString},
         type: { type: GraphQLString},
+        ctype: { type: GraphQLString},
         description: { type: GraphQLString},
         address: { type: GraphQLString},
         city: { type: GraphQLString},
@@ -105,6 +106,8 @@ const Mutation = new GraphQLObjectType({ //Create and update
             args: {
                 name: {type: new GraphQLNonNull(GraphQLString)},
                 type: {type: new GraphQLNonNull(GraphQLString)},
+                ctype: {type: new GraphQLNonNull(GraphQLString)},
+                id: {type: new GraphQLNonNull(GraphQLString)},
                 description: {type: GraphQLString},
                 address: {type: GraphQLString},
                 city: {type: GraphQLString},

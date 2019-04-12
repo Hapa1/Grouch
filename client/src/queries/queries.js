@@ -14,10 +14,11 @@ const getContainersQuery = gql`
     }
 `
 const addContainerMutation = gql`
-    mutation($name: String!, $type: String!, $lat: Float!, $lng: Float!) { 
-        addContainer(name: $name, type: $type, lat: $lat, lng: $lng){
+    mutation($name: String!, $ctype: String!, $id: String!, $type: String!, $lat: Float!, $lng: Float!) { 
+        addContainer(ctype: $ctype, id: $id, name: $name, type: $type, lat: $lat, lng: $lng){
             name
             id
+            ctype
             lat
             lng
         }
