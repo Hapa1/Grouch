@@ -399,12 +399,7 @@ class Dashboard extends Component {
                                 <h3>0</h3>
                             </div>
                         </div>
-                        <div style={{marginLeft: '100px', padding: '5px', color: "#65b959"}}>
-                            Devices Needing Maintenance
-                            <div>
-                                <h3>0</h3>
-                            </div>
-                        </div>
+                        
                     </div>
                     <div className="rowContainer"> 
                         <div>
