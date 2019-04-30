@@ -13,6 +13,8 @@ import { getContainersQuery, deleteContainerMutation  } from '../../queries/quer
 import Header from '../Header';
 import ReactDOM from 'react-dom';
 import Dashboard from '../Dashboard';
+import { FaRegBell } from 'react-icons/fa';
+
 
 const mapStyles = {
   width: '100%',
@@ -144,6 +146,8 @@ export class MapContainer extends Component {
     }
 
   }
+
+
   componentDidMount() {
     const percent = 250
     this.setState({ percent });
@@ -218,6 +222,24 @@ export class MapContainer extends Component {
     );
   }
 
+  getRGB(type,level){
+    console.log(type)
+    if (type == 'Solid Rubbish'){
+      console.log("levle",level)
+      var color = `hsla(34, 100%,  ${70-level/3}%)`
+      console.log(color)
+      return color
+
+    }
+    if (type == 'Recyclables'){
+      //rgb(149,227,242) to rgb(21,177,208)
+
+      //return 'rgb(' + r + ',' + g + ',' + b + ')'
+    }
+    if (type == 'Green Waste'){
+      //rgb(197,226,184) to rgb(117,176,91)
+    }
+  }
 
   render() {
     const markers = []
@@ -243,10 +265,12 @@ export class MapContainer extends Component {
         console.log(c.imgUrl)
         if(displayedContainers.includes(c.type)){
           var percent = this.percentify(currentLevel)
+          console.log("percent",percent)
+          console.log(c)
           markers.push(
             <Marker
               ctype = {c.ctype}
-              icon={url}
+              icon=' '
               key={c.id}
               onClick={this.onMarkerClick}
               name={c.name}
@@ -261,6 +285,14 @@ export class MapContainer extends Component {
               type={c.type}
               lat = {c.lat}
               lng = {c.lng}
+              label = {{
+                fontFamily: '"Font Awesome 5 Free"',
+                text: "\uf1f8",
+                color: this.getRGB(c.type,c.wasteLevels[23]),
+                fontSize: '20px',
+                fontWeight: '900',
+              }}
+              //labelContent = {'<i class="fa fa-send fa-3x" style="color:rgba(153,102,102,0.8);"></i>'}
               position={{
                 lat: c.lat,
                 lng: c.lng

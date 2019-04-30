@@ -173,10 +173,6 @@ class Dashboard extends Component {
                   }
                 for (var i = 0; i < container.wasteLevels.length; i++){
                     
-                    console.log(container.wasteLevels.length)
-                    console.log(container.wasteLevels.length)
-                     console.log(container.wasteLevels[i], container.wasteTimes[i])
-                     console.log()
                       var timestamp = this.convertTime(container.wasteTimes[i])
                       times.push(timestamp)
                       var date = this.convertFromSeconds(timestamp)
@@ -222,11 +218,9 @@ class Dashboard extends Component {
                 
             })
     
-        console.log(greenData)
            var greenData= (this.getSum(greenData))
            var rubbishData= (this.getSum(rubbishData))
            var recycleData = (this.getSum(recycleData))
-           console.log(greenData)
            var gfinal = greenData[greenData.length-1].y
            var rfinal = rubbishData[rubbishData.length-1].y
            var refinal = recycleData[recycleData.length-1].y
@@ -242,8 +236,6 @@ class Dashboard extends Component {
         values.push(rfinal)
         values.push(refinal)
 
-        //console.log(greenData.length)
-        console.log(refinal)
         var rubbish = {
             empty: 9,
             low: 10,
