@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import '../static/Menu.css';
 import CheckBox from './CheckBox';
-import { FaBars } from 'react-icons/fa';
+import { FaBars, FaMapMarker } from 'react-icons/fa';
 
 export class Menu extends Component {
 
@@ -65,22 +65,83 @@ export class Menu extends Component {
         console.log(this.state.sliderValue)
     }
 
+    updatePriceLabels(){
+        function updatePriceLabels() {
+            //avoids slider overlap
+            var sliders = document.querySelectorAll(".price-slider input");
+            var val1 = parseInt(sliders[0].value);
+            var val2 = parseInt(sliders[1].value);
+            if (val1 >= val2) {
+                sliders[0].value = val2 - 3;
+                return;
+            }
+            if (val2 <= val1) {
+                sliders[1].value = val1 + 3;
+                return;
+            }
+            
+            //adds color when a range is selected
+            if (val1 > 0 || val2 < 99) {
+                sliders[0].style.background = sliders[1].style.background = "-webkit-gradient(linear, 0 0,100% 0, color-stop(0, white), color-stop(" + (val1 / 100) + ", white),color-stop(" + (val1 / 100) + ", #f0f0f0), color-stop(" + (val2 / 100) + ", #f0f0f0), color-stop(" + (val2 / 100) + ", white))";
+            } else {
+                sliders[0].style.background = sliders[1].style.background = '';
+            }
+        }
+    }
+
     render() {
         const checkboxes = [
             {
               name: 'Solid Rubbish',
               key: 'Solid Rubbish',
               label: 'Solid Rubbish',
+              color: '#ff8723',
             },
             {
               name: 'Recyclables',
               key: 'Recyclables',
               label: 'Recyclables',
+              color: '#00bedf',
             },
             {
               name: 'Green Waste',
               key: 'Green Waste',
               label: 'Green Waste',
+              color: '#41be4c',
+            }
+        ];
+        const levelcheckboxes = [
+            {
+              name: 'Low',
+              key: 'Low',
+              label: 'Low',
+              rub: '#ffd890',
+              rec: '#a5def6',
+              gre: '#a5dfb6',
+            },
+            {
+              name: 'Moderate',
+              key: 'Moderate',
+              label: 'Moderate',
+              rub: '#ffac6f',
+              rec: '#3cd5ff',
+              gre: '#68c67c',
+            },
+            {
+              name: 'High',
+              key: 'High',
+              label: 'High',
+              rub: '#ff9000',
+              rec: '#00bfe0',
+              gre: '#47bc4e',
+            },
+            {
+                name: 'Critical',
+                key: 'Critical',
+                label: 'Critical',
+                rub: '#884500',
+                rec: '#007174',
+                gre: '#009b1c'
             }
         ];
         return (
@@ -88,20 +149,56 @@ export class Menu extends Component {
                     
                     <div id="sideMenu" className="down-content">
                         <form value={this.state.checkedItems}>
+                            <div>
+                                Waste Type
+                            </div>
                             <React.Fragment>
                                 {
                                 checkboxes.map(item => (
-                                    <div className="checkContainer" key={item.key}>
-                                        <div>
-                                            <CheckBox name={item.name} checked={this.state.checkedItems[item.name]} onChange={this.handleChange} />
+                                    <div style={{display:'flex', justifyContent: 'space-between'}} key={item.key}>
+
+                                        <div style={{display:'flex'}}>
+                                            <div>
+                                                <CheckBox name={item.name} checked={this.state.checkedItems[item.name]} onChange={this.handleChange} />
+                                            </div>
+                                            <div>
+                                                {item.name}
+                                            </div>
                                         </div>
-                                        <div>
-                                            {item.name}
+                                        <div style={{display:'flex'}}>
+
+                                            <div><FaMapMarker style={{marginRight:'10px',fontSize: '22px', color:item.color}}></FaMapMarker></div>
+                                            
                                         </div>
                                     </div>
                                 ))
                                 }
                             </React.Fragment>
+                            <div>
+                                Waste Levels
+                            </div>
+                            <React.Fragment>
+                                {
+                                levelcheckboxes.map(item => (
+                                    <div style={{display:'flex', justifyContent: 'space-between'}} key={item.key}>
+                                        <div style={{display:'flex'}}>
+                                            <div>
+                                                <CheckBox name={item.name} checked={this.state.checkedItems[item.name]} onChange={this.handleChange} />
+                                            </div>
+                                            <div>
+                                                {item.name}
+                                            </div>
+                                        </div>
+                                        <div style={{display:'flex'}}>
+                                            <div><FaMapMarker style={{color:item.rub}}></FaMapMarker></div>
+                                            <div><FaMapMarker style={{color:item.rec}}></FaMapMarker></div>
+                                            <div><FaMapMarker style={{color:item.gre}}></FaMapMarker></div>
+                                        </div>
+                                    </div>
+                                ))
+                                }
+                            </React.Fragment>
+                            
                             <center><button style={{marginTop: '15px'}} onClick={this.props.addMarker} type="submit" className="btn btn-success">Add Marker</button></center>
                             <center><button style={{marginTop: '15px'}} onClick={this.props.onChange(this.state.checkedItems)} type="submit" className="btn btn-success">Update Map</button></center>
                                 

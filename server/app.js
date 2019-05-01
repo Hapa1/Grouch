@@ -10,7 +10,8 @@ console.log("URI",keys.mongoURI)
 
 app.use(cors());
 
-mongoose.connect(keys.mongoURI);
+//mongoose.connect(keys.mongoURI);
+mongoose.connect('mongodb://admin:secret123@ds012889.mlab.com:12889/grouch-dev')
 
 mongoose.connection.once('open', () => {
     console.log('connected to MongoDB')

@@ -108,8 +108,14 @@ class LineGraph extends Component {
   //2019-04-11, 21:43:23
   render() {
     var labels = []
-    console.log(this.props.data[0])
+
     const options = {
+      legend: {
+        display: false,
+        labels: {
+            fontColor: 'rgb(255, 99, 132)'
+        }
+      },
       scales: {
         xAxes: [{
           type: 'time',
@@ -134,19 +140,22 @@ class LineGraph extends Component {
             label: 'Green Waste',
             data: this.props.data[0],
             fill: false,          // Don't fill area under the line
-            borderColor: '#7ac37a'  // Line color
+            borderColor: '#7ac37a', // Line color
+            pointRadius: 0,
           },
           {
             label: 'Solid Rubbish',
             data: this.props.data[1],
             fill: false,          // Don't fill area under the line
-            borderColor: '#fab277'  // Line color
+            borderColor: '#fab277',  // Line color
+            pointRadius: 0,
           },
           {
             label: 'Recyclables',
             data: this.props.data[2],
             fill: false,          // Don't fill area under the line
-            borderColor: '#69d3fb'  // Line color
+            borderColor: '#69d3fb',  // Line color
+            pointRadius: 0,
           }
         ]
       }

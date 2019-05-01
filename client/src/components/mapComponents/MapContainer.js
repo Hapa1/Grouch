@@ -51,23 +51,23 @@ export class MapContainer extends Component {
       lng: 0,
       cursor: 'crosshair'
     }
-    console.log(initMap)
+
     this.handleChange = this.handleChange.bind(this);
     this.removeContainer = this.removeContainer.bind(this);
     this.toggleMenu = this.toggleMenu.bind(this);
     this.toggleDash = this.toggleDash.bind(this);
   }
   toggleDash() {
-    console.log("toggle")
+   
     var sideDash = document.getElementById('dashboard');
     
     if(this.state.dashActive){
-      console.log("remove dash")
+
       sideDash.style.animationName = "slideout2";
       sideDash.style.display = "block";
       sideDash.style.marginleft = "200%";
       sideDash.style.overflow = "hidden";
-      console.log(sideDash)
+
       this.setState({ dashActive: false});
   }
   else {
@@ -75,20 +75,21 @@ export class MapContainer extends Component {
       sideDash.style.animationName = "slidein2"
       sideDash.style.marginleft = "50%";
       sideDash.style.overflow = "hidden";
-      console.log(sideDash)
+     
       this.setState({ dashActive: true});
   }
   }
   toggleMenu() {
     var sideMenu = document.getElementById('sideMenu');
     if(this.state.menuActive){
-        console.log("remove menu")
+  
         sideMenu.style.animationName = "slideout1";
         sideMenu.style.marginLeft = "-45%";
         this.setState({ menuActive: false});
     }
     else {
-        console.log("display menu")
+       
+      
         sideMenu.style.animationName = "slidein1"
         sideMenu.style.display = "block";
         sideMenu.style.marginLeft = "0%";
@@ -98,7 +99,7 @@ export class MapContainer extends Component {
   }
 
   handleChange = (param) => (e) => {
-    console.log("Submitted")
+
     e.preventDefault();
     
     this.setState({
@@ -226,18 +227,17 @@ export class MapContainer extends Component {
     console.log(type)
     if (type == 'Solid Rubbish'){
       console.log("levle",level)
-      var color = `hsla(34, 100%,  ${70-level/3}%)`
-      console.log(color)
+      var color = `hsla(34, 100%,  ${70-level/2}%)`
       return color
 
     }
-    if (type == 'Recyclables'){
-      //rgb(149,227,242) to rgb(21,177,208)
-
-      //return 'rgb(' + r + ',' + g + ',' + b + ')'
-    }
     if (type == 'Green Waste'){
-      //rgb(197,226,184) to rgb(117,176,91)
+      var color = `hsla(140, 74%,  ${75-level/1.75}%)`
+      return color
+    }
+    if (type == 'Recyclables'){
+      var color = `hsla(183, 90%,  ${60-level/2.5}%)`
+      return color
     }
   }
 
@@ -250,7 +250,7 @@ export class MapContainer extends Component {
       
     else {
       var containers = data.containers
-      console.log(containers.ctype)
+      
       containers.forEach((c) => {
         var currentLevel = c.wasteLevels[c.wasteLevels.length-1]
         const url = this.checkLevel(currentLevel)
@@ -262,11 +262,10 @@ export class MapContainer extends Component {
             }
           }
         }
-        console.log(c.imgUrl)
+      
         if(displayedContainers.includes(c.type)){
           var percent = this.percentify(currentLevel)
-          console.log("percent",percent)
-          console.log(c)
+          
           markers.push(
             <Marker
               ctype = {c.ctype}
@@ -287,7 +286,7 @@ export class MapContainer extends Component {
               lng = {c.lng}
               label = {{
                 fontFamily: '"Font Awesome 5 Free"',
-                text: "\uf1f8",
+                text: "\uf041",
                 color: this.getRGB(c.type,c.wasteLevels[23]),
                 fontSize: '20px',
                 fontWeight: '900',

@@ -201,7 +201,7 @@
       "featureType": "road",
       "stylers": [
           {
-              "color": "#ffffff"
+              "color": "#eeeeee"
           }
       ]
   },

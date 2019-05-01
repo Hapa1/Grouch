@@ -6,6 +6,8 @@ import Pie from './charts/pie';
 import Segregation from './charts/segregation';
 import '../static/Dashboard.css';
 import moment from 'moment';
+import { FaTrash, FaRecycle, FaLeaf } from 'react-icons/fa';
+
 class Dashboard extends Component {
 
 
@@ -297,68 +299,129 @@ class Dashboard extends Component {
 
         <div>
             <div className="graphContainer">
-                    <div style={{marginTop: '50px'}}>
-                        <div>
-                            Overall waste collected for April
+                
+                <div style={{display:'flex'}}>
+                <div>
+                <div className="Center" style={{margin:'12.5px'}}>
+                    <h4>{total} Gallons collected for April</h4>
+                </div>
+               
+                <div style={{display:'flex'}}>
+                
+                
+                <div style={{marginTop:'1rem'}}>
+                        <span style={{color: "#f28d3f"}}>
+                            <div style={{display:'flex'}}>
+                            <div>
+                                <FaTrash className='Icon'></FaTrash>
+                            </div>
+                            <div style={{marginLeft: '7.5px'}}>
+                                <div>
+                                    Solid Rubbish!
+                                </div>
+                                <div className="Center">
+                                    <h4>{rct}</h4>
+                                </div>
+                            </div>
+                            </div>
+                        </span>
+                        <span style={{color: "#65b959"}}>
+                            <div style={{display:'flex'}}>
+                            <div>
+                                <FaLeaf className='Icon'></FaLeaf>
+                            </div>
+                            <div style={{marginLeft: '7.5px'}}>
+                                <div>
+                                    Green Waste
+                                </div>
+                                <div className="Center">
+                                    <h4>{gct}</h4>
+                                </div>
+                            </div>
+                            </div>
+                        </span>
+                        <span style={{color: "#00bbdb"}}>
+                            <div style={{display:'flex'}}>
+                            <div>
+                                <FaRecycle className='Icon'></FaRecycle>
+                            </div>
+                            <div style={{marginLeft: '7.5px'}}>
+                                <div>
+                                    Recyclables
+                                </div>
+                                <div className="Center">
+                                    <h4>{rect}</h4>
+                                </div>
+                            </div>
+                            </div>
+                        </span>
                         </div>
-                        <div>
-                            <h4>{total} Gal</h4>
+                        <div className="LineContainer">
+                            <Line values={values} data={dataset}></Line>
                         </div>
-                        <div style={{color: "#f28d3f"}}>
-                            Solid Rubbish
                         </div>
-                        <div style={{color: "#f28d3f"}}>
-                            <h5>{rfinal} Gal</h5>
-                        </div>
-                        <div style={{color: "#65b959"}}>
-                            Green Waste
-                        </div>
-                        <div style={{color: "#65b959"}}>
-                            <h5>{gfinal} Gal</h5>
-                        </div>
-                        <div style={{color: "#00bbdb"}}>
-                            Recyclables
-                        </div>
-                        <div style={{color: "#00bbdb"}}>
-                            <h5>{refinal} Gal</h5>
-                        </div>
-                    </div>
-                    
-                    <div className="Line Box" style={{width: "30%", height: "30%"}}>
-        
-                        <Line values={values} data={dataset}></Line>
-
-                    </div>
-                    <div style={{marginTop: '50px'}}>
-                        <div>
-                            Containers Monitored
-                        </div>
-                        <div>
-                            <h4>{cttotal} </h4>
-                        </div>
-                        <div style={{color: "#f28d3f"}}>
-                            Solid Rubbish
-                        </div>
-                        <div style={{color: "#f28d3f"}}>
-                            <h5>{rct} </h5>
-                        </div>
-                        <div style={{color: "#65b959"}}>
-                            Green Waste
-                        </div>
-                        <div style={{color: "#65b959"}}>
-                            <h5>{gct}</h5>
-                        </div>
-                        <div style={{color: "#00bbdb"}}>
-                            Recyclables
-                        </div>
-                        <div style={{color: "#00bbdb"}}>
-                            <h5>{rect}</h5>
-                        </div>
-                    </div>
-                    <div className="Pie Box" style={{width: "25%", height: "25%"}}>
-                        <Pie data={data}></Pie>
                         
                     </div>
+                    <div>
+                    <div className="Center" style={{marginTop:'12.5px'}}>
+                        <h4>{cttotal} Containers Monitored </h4>
+                    </div>
+                    <div style={{display:'flex'}}>
+                    <div style={{marginTop:'1rem'}}>
+                        <span style={{color: "#f28d3f"}}>
+                            <div style={{display:'flex'}}>
+                            <div>
+                                <FaTrash className='Icon'></FaTrash>
+                            </div>
+                            <div style={{marginLeft: '7.5px'}}>
+                                <div>
+                                    Solid Rubbish!
+                                </div>
+                                <div className="Center">
+                                    <h4>{rct}</h4>
+                                </div>
+                            </div>
+                            </div>
+                        </span>
+                        <span style={{color: "#65b959"}}>
+                            <div style={{display:'flex'}}>
+                            <div>
+                                <FaLeaf className='Icon'></FaLeaf>
+                            </div>
+                            <div style={{marginLeft: '7.5px'}}>
+                                <div>
+                                    Green Waste
+                                </div>
+                                <div className="Center">
+                                    <h4>{gct}</h4>
+                                </div>
+                            </div>
+                            </div>
+                        </span>
+                        <span style={{color: "#00bbdb"}}>
+                            <div style={{display:'flex'}}>
+                            <div>
+                                <FaRecycle className='Icon'></FaRecycle>
+                            </div>
+                            <div style={{marginLeft: '7.5px'}}>
+                                <div>
+                                    Recyclables
+                                </div>
+                                <div className="Center">
+                                    <h4>{rect}</h4>
+                                </div>
+                            </div>
+                            </div>
+                        </span>
+                        
+                        
+                    </div>
+                        <div>
+                            <Pie data={data}></Pie>
+                        </div> 
+                    </div>
+                    </div>
+                 </div>
                 
             </div>
             <div  className="statContainer">
@@ -405,6 +468,7 @@ class Dashboard extends Component {
                 </div>
                 
             </div> 
+            
         </div>
         </div>
         

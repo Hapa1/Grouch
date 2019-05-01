@@ -5,10 +5,15 @@ import { FaCheckSquare, FaRegSquare } from 'react-icons/fa';
 
 const CheckBox = ({ type = 'checkbox', name, checked = false, onChange }) => 
     (
-    
-    <div>
-        <input id={name} className="regular-checkbox" type={type} name={name} checked={checked} onChange={onChange} /><label for={name}></label>
+    <div style={{display:'flex'}}>
+        <div>
+            <input id={name} className="regular-checkbox" type={type} name={name} checked={checked} onChange={onChange} /><label for={name}></label>
+        </div>
+        
+        
     </div>
+    
+    
 );
 
 CheckBox.propTypes = {

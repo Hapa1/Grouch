@@ -27,12 +27,18 @@ class PieChart extends Component {
     }
     const options = {
         layout: {
-          padding: {
-              left: 50,
-              top: 0,
-              bottom: 0
+            padding: {
+                left: 50,
+                top: 0,
+                bottom: 0
+            }
+        },
+        legend: {
+            display: false,
+            labels: {
+                fontColor: 'rgb(255, 99, 132)'
+            }
         }
-      }
       }
     data = {
         datasets: [{
