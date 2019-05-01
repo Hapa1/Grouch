@@ -4,6 +4,7 @@ const Container = require('../models/container')
 var moment = require('moment')
 
 const { 
+    
     GraphQLFloat,
     GraphQLObjectType, 
     GraphQLString, 
@@ -42,7 +43,8 @@ const ContainerType = new GraphQLObjectType({
         },
         wasteTimes: { 
             type: GraphQLList(GraphQLString)
-        }
+        },
+        emptyLevel: { type: GraphQLFloat}
     })
 })
 
@@ -135,6 +137,7 @@ const Mutation = new GraphQLObjectType({ //Create and update
                 city: {type: GraphQLString},
                 lat: { type: GraphQLFloat},
                 lng: { type: GraphQLFloat},
+                emptyLevel: { type: GraphQLFloat}
             },
             resolve(parent, args){//store in database 
                 console.log("type", args.ctype)
@@ -164,6 +167,7 @@ const Mutation = new GraphQLObjectType({ //Create and update
                     wasteLevels: levels,
                     wasteTimes: times,
                     imgUrl: url,
+                    emptyLevel: 100,
                 });
                 console.log(args.ctype)
                 console.log(container)

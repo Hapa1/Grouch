@@ -18,6 +18,7 @@ const containerSchema = new Schema({
     wasteTimes: [{
         type: String
     }],
+    emptyLevel: Number,
 });
 
 module.exports = mongoose.model('Container', containerSchema);
