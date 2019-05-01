@@ -25,6 +25,10 @@ app.use('/graphql',graphqlHTTP({
 
 const PORT = process.env.PORT || 8080;
 
+app.get("*", (req, res) => {
+    res.sendFile(path.join(__dirname, "../client", "build", "index.html"));
+});
+
 app.listen(PORT, () => {
     console.log("Server online at port 5000")
 })
