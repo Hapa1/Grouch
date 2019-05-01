@@ -52,7 +52,6 @@ class Segregation extends Component {
         var mcolor = levels.mcolor
         var hcolor = levels.hcolor
         var ccolor = levels.ccolor
-        console.log(levels)
             return(
                 <div>
                     <div className="barContainer">

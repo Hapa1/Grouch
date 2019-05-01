@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
 import '../static/Menu.css';
 import CheckBox from './CheckBox';
-import { FaBars, FaMapMarker } from 'react-icons/fa';
-
+import { FaBars, FaMapMarker, FaTrash, FaTrashAlt} from 'react-icons/fa';
 export class Menu extends Component {
 
    
@@ -14,6 +13,13 @@ export class Menu extends Component {
         initMap["Solid Rubbish"] = true;
         initMap["Recyclables"] = true;
         initMap["Green Waste"] = true;
+        initMap["Low"] = true;
+        initMap["Moderate"] = true;
+        initMap["High"] = true;
+        initMap["Critical"] = true;
+        initMap["Can"] = true;
+        initMap["Bin"] = true;
+        initMap["Dumpster"] = true;
 
         this.state = {
          // checkedItems: new Map(),
@@ -65,28 +71,17 @@ export class Menu extends Component {
         console.log(this.state.sliderValue)
     }
 
-    updatePriceLabels(){
-        function updatePriceLabels() {
-            //avoids slider overlap
-            var sliders = document.querySelectorAll(".price-slider input");
-            var val1 = parseInt(sliders[0].value);
-            var val2 = parseInt(sliders[1].value);
-            if (val1 >= val2) {
-                sliders[0].value = val2 - 3;
-                return;
-            }
-            if (val2 <= val1) {
-                sliders[1].value = val1 + 3;
-                return;
-            }
-            
-            //adds color when a range is selected
-            if (val1 > 0 || val2 < 99) {
-                sliders[0].style.background = sliders[1].style.background = "-webkit-gradient(linear, 0 0,100% 0, color-stop(0, white), color-stop(" + (val1 / 100) + ", white),color-stop(" + (val1 / 100) + ", #f0f0f0), color-stop(" + (val2 / 100) + ", #f0f0f0), color-stop(" + (val2 / 100) + ", white))";
-            } else {
-                sliders[0].style.background = sliders[1].style.background = '';
-            }
+    getIcon(name){
+        if(name == 'Can'){
+            return <i style={{fontSize: '16px', color:'#777777'}} class="far fa-trash-alt"></i>
         }
+        if(name == 'Bin'){
+            return <div><FaTrash style={{fontSize: '18px', color:'#777777'}}></FaTrash></div>
+        }
+        if(name == 'Dumpster'){
+            return <i style={{fontSize: '20px', color:'#777777'}} class='fas fa-dumpster'></i>
+        }
+        
     }
 
     render() {
@@ -144,11 +139,48 @@ export class Menu extends Component {
                 gre: '#009b1c'
             }
         ];
+        const containercheckboxes = [
+            {
+              name: 'Can',
+              key: 'Can',
+              label: 'Can',
+              rub: '#ffd890',
+              rec: '#a5def6',
+              gre: '#a5dfb6',
+            },
+            {
+              name: 'Bin',
+              key: 'Bin',
+              label: 'Bin',
+              rub: '#ffac6f',
+              rec: '#3cd5ff',
+              gre: '#68c67c',
+            },
+            {
+              name: 'Dumpster',
+              key: 'Dumpster',
+              label: 'Dumpster',
+              rub: '#ff9000',
+              rec: '#00bfe0',
+              gre: '#47bc4e',
+            },
+        ];
         return (
             <div className="down">
                     
                     <div id="sideMenu" className="down-content">
                         <form value={this.state.checkedItems}>
+                            <div>
+                                Display Type
+                            </div>
+                            <div class="selector">
+                                <input type="radio" name="radio"/>
+                                <span class="checkmark"></span>
+                            </div>
+                            <div class="selector">
+                                <input type="radio" name="radio"/>
+                                <span class="checkmark"></span>
+                            </div>
                             <div>
                                 Waste Type
                             </div>
@@ -198,7 +230,29 @@ export class Menu extends Component {
                                 ))
                                 }
                             </React.Fragment>
-                            
+                            <div>
+                                Container Type
+                            </div>
+                            <React.Fragment>
+                                {
+                                containercheckboxes.map(item => (
+                                    <div style={{display:'flex', justifyContent: 'space-between'}} key={item.key}>
+
+                                        <div style={{display:'flex'}}>
+                                            <div>
+                                                <CheckBox name={item.name} checked={this.state.checkedItems[item.name]} onChange={this.handleChange} />
+                                            </div>
+                                            <div>
+                                                {item.name}
+                                            </div>
+                                        </div>
+                                        <div style={{display:'flex'}}>
+                                            {this.getIcon(item.name)}
+                                        </div>
+                                    </div>
+                                ))
+                                }
+                            </React.Fragment>
                             <center><button style={{marginTop: '15px'}} onClick={this.props.addMarker} type="submit" className="btn btn-success">Add Marker</button></center>
                             <center><button style={{marginTop: '15px'}} onClick={this.props.onChange(this.state.checkedItems)} type="submit" className="btn btn-success">Update Map</button></center>
                                 

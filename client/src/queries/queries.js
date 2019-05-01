@@ -12,6 +12,7 @@ const getContainersQuery = gql`
             type
             imgUrl
             ctype
+            emptyLevel
         }
     }
 `

@@ -34,12 +34,12 @@ const ContainerType = new GraphQLObjectType({
         description: { type: GraphQLString},
         address: { type: GraphQLString},
         city: { type: GraphQLString},
-        level: { type: GraphQLInt},
+        level: { type: GraphQLFloat},
         lat: { type: GraphQLFloat},
         lng: { type: GraphQLFloat},
         imgUrl: { type: GraphQLString},
         wasteLevels: { 
-            type: GraphQLList(GraphQLInt)
+            type: GraphQLList(GraphQLFloat)
         },
         wasteTimes: { 
             type: GraphQLList(GraphQLString)

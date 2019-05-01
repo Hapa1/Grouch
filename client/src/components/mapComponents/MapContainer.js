@@ -38,6 +38,11 @@ export class MapContainer extends Component {
     initMap["Solid Rubbish"] = true;
     initMap["Recyclables"] = true;
     initMap["Green Waste"] = true;
+    initMap["Low"] = true;
+    initMap["Moderate"] = true;
+    initMap["High"] = true;
+    initMap["Critical"] = true;
+    
 
     this.state = {
       menuActive: true,
@@ -71,7 +76,7 @@ export class MapContainer extends Component {
       this.setState({ dashActive: false});
   }
   else {
-      console.log("display dash")
+
       sideDash.style.animationName = "slidein2"
       sideDash.style.marginleft = "50%";
       sideDash.style.overflow = "hidden";
@@ -105,7 +110,7 @@ export class MapContainer extends Component {
     this.setState({
       boxes: param,
     })
-    console.log(this.state)
+ 
   }
 
 
@@ -180,15 +185,15 @@ export class MapContainer extends Component {
       var modal = document.getElementById('myModal');
       modal.style.display = "block";
       this.setState({lat,lng})
-      console.log(lat,lng)
+  
     }
   }
 
   removeContainer(e) {
     e.preventDefault()
-    console.log(this.props)
+   
     var id = e.target.id
-    console.log(id)
+ 
     this.setState({
       showingInfoWindow: false,
     })
@@ -224,9 +229,9 @@ export class MapContainer extends Component {
   }
 
   getRGB(type,level){
-    console.log(type)
+
     if (type == 'Solid Rubbish'){
-      console.log("levle",level)
+
       var color = `hsla(34, 100%,  ${70-level/2}%)`
       return color
 
@@ -241,7 +246,45 @@ export class MapContainer extends Component {
     }
   }
 
+  getChecks() {
+    var displayedContainers = []
+    
+    for (var key in this.state.boxes){
+            
+      if (this.state.boxes[key] == true){
+        displayedContainers.push(key)
+      }
+    }
+    console.log(displayedContainers)
+    return displayedContainers
+  }
+
+  checkRange(ranges, percent){
+    for(var i = 0; i < ranges.length; i++){
+      if(percent > ranges[i][0] && percent <= ranges[i][1]){
+        console.log(ranges[i])
+        return true;
+      }
+    }
+    return false;
+  }
+
   render() {
+    var displayedContainers = this.getChecks()
+    var ranges = []
+    if(displayedContainers.includes("Low")){
+      ranges.push([0,25])
+    }
+    if(displayedContainers.includes("Moderate")){
+      ranges.push([25,50])
+    }
+    if(displayedContainers.includes("High")){
+      ranges.push([50,75])
+    }
+    if(displayedContainers.includes("Critical")){
+      ranges.push([75,100])
+    }
+    console.log(this.checkRange(ranges,34.3))
     const markers = []
     var i = 0
     var data = this.props.getContainersQuery
@@ -252,20 +295,20 @@ export class MapContainer extends Component {
       var containers = data.containers
       
       containers.forEach((c) => {
-        var currentLevel = c.wasteLevels[c.wasteLevels.length-1]
-        const url = this.checkLevel(currentLevel)
-        var displayedContainers = []
-        if(this.state.boxes){
-          for (var key in this.state.boxes){
-            if (this.state.boxes[key] == true){
-              displayedContainers.push(key)
-            }
-          }
-        }
-      
-        if(displayedContainers.includes(c.type)){
-          var percent = this.percentify(currentLevel)
+        var currentLevel = ((c.emptyLevel - c.wasteLevels[c.wasteLevels.length-1])/(c.emptyLevel))*100
+        
+        //const url = this.checkLevel(currentLevel)
+        
+        //if(this.state.boxes){
           
+        //}
+        
+        if(
+        displayedContainers.includes(c.type)
+        && this.checkRange(ranges,currentLevel)
+        ){
+          var percent = this.percentify(currentLevel)
+         
           markers.push(
             <Marker
               ctype = {c.ctype}
@@ -287,7 +330,7 @@ export class MapContainer extends Component {
               label = {{
                 fontFamily: '"Font Awesome 5 Free"',
                 text: "\uf041",
-                color: this.getRGB(c.type,c.wasteLevels[23]),
+                color: this.getRGB(c.type,currentLevel),
                 fontSize: '20px',
                 fontWeight: '900',
               }}
@@ -301,7 +344,7 @@ export class MapContainer extends Component {
         
         i = i + .010
       });
-      console.log(markers)
+   
     }
     
     
