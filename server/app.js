@@ -27,7 +27,8 @@ app.use('/', function(req, res, next) {
     res.render('index', { title: 'Express' });
 });
 
+const PORT = process.env.PORT || 8080;
 
-app.listen(8080, () => {
+app.listen(PORT, () => {
     console.log("Server online at port 5000")
 })
