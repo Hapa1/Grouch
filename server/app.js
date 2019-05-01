@@ -23,10 +23,6 @@ app.use('/graphql',graphqlHTTP({
     graphiql: true
 }));
 
-app.use('/', function(req, res, next) {
-    res.render('index', { title: 'Express' });
-});
-
 const PORT = process.env.PORT || 8080;
 
 app.listen(PORT, () => {
