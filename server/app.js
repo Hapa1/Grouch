@@ -23,11 +23,20 @@ app.use('/graphql',graphqlHTTP({
     graphiql: true
 }));
 
-const PORT = process.env.PORT || 8080;
-
-app.get("*", (req, res) => {
-    res.sendFile(path.join(__dirname, "../client", "build", "index.html"));
-});
+if (process.env.NODE_ENV === 'production') {
+    //Express will server up production assets
+    //like main.js file, or main.css
+  
+    app.use(express.static('../client/build'));
+  
+    //Express will serve up the index.html file if
+    //it doesn't recognize the route
+    const path = require('path');
+    app.get('*', (req, res) => {
+      res.sendFile(path.resolve(__dirname, '../client', 'build', 'index.html'));
+    });
+  
+  }
 
 app.listen(PORT, () => {
     console.log("Server online at port 5000")
