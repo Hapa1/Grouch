@@ -223,7 +223,8 @@ class Dashboard extends Component {
            var greenData= (this.getSum(greenData))
            var rubbishData= (this.getSum(rubbishData))
            var recycleData = (this.getSum(recycleData))
-           var gfinal = greenData[greenData.length-1].y
+           var gfinal = 0
+           
            var rfinal = rubbishData[rubbishData.length-1].y
            var refinal = recycleData[recycleData.length-1].y
            var total = gfinal+rfinal+refinal

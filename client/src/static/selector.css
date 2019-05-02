@@ -1,0 +1,19 @@
+.item {
+    width: 25px;
+    height: 25px;
+    position: relative;
+    animation-name: example;
+    animation-duration: 3s;
+    animation-fill-mode: forwards;
+    
+}
+@keyframes slide {
+    from {
+        top: '0px'
+    }
+  
+    to {
+        top: '100px';
+      
+    }
+  }

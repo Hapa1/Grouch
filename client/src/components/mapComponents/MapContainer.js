@@ -331,7 +331,7 @@ export class MapContainer extends Component {
                 fontFamily: '"Font Awesome 5 Free"',
                 text: "\uf041",
                 color: this.getRGB(c.type,currentLevel),
-                fontSize: '20px',
+                fontSize: '24px',
                 fontWeight: '900',
               }}
               //labelContent = {'<i class="fa fa-send fa-3x" style="color:rgba(153,102,102,0.8);"></i>'}

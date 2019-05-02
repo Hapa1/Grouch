@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import '../static/Menu.css';
 import CheckBox from './CheckBox';
+import Selector from './Selector';
 import { FaBars, FaMapMarker, FaTrash, FaTrashAlt} from 'react-icons/fa';
 export class Menu extends Component {
 
@@ -84,6 +85,9 @@ export class Menu extends Component {
         
     }
 
+    click(){
+        console.log("test!!")
+    }
     render() {
         const checkboxes = [
             {
@@ -170,17 +174,8 @@ export class Menu extends Component {
                     
                     <div id="sideMenu" className="down-content">
                         <form value={this.state.checkedItems}>
-                            <div>
-                                Display Type
-                            </div>
-                            <div class="selector">
-                                <input type="radio" name="radio"/>
-                                <span class="checkmark"></span>
-                            </div>
-                            <div class="selector">
-                                <input type="radio" name="radio"/>
-                                <span class="checkmark"></span>
-                            </div>
+                            
+                            <Selector></Selector>
                             <div>
                                 Waste Type
                             </div>
