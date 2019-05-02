@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import '../static/Menu.css';
 import CheckBox from './CheckBox';
 import Selector from './Selector';
+import ColorSelector from './ColorSelector';
 import { FaBars, FaMapMarker, FaTrash, FaTrashAlt} from 'react-icons/fa';
 export class Menu extends Component {
 
@@ -21,16 +22,24 @@ export class Menu extends Component {
         initMap["Can"] = true;
         initMap["Bin"] = true;
         initMap["Dumpster"] = true;
+        initMap["Selected"] = "Icon";
+        initMap["ColorScheme"] = "Default";
 
         this.state = {
          // checkedItems: new Map(),
             checkedItems: initMap,
             menuActive: true,
             sliderValue: 50,
+            activeelement: "Icon",
+            prevelement: "Icon",
+            activecolorelement: "Default",
+            prevcolorlement: "Default",
+
         }
         this.toggleMenu = this.toggleMenu.bind(this);
         this.handleChange = this.handleChange.bind(this);
         this.sliderChange = this.sliderChange.bind(this);
+        this.onChange = this.onChange.bind(this);
         //this.addMarker = this.addMarker.bind(this);
        
     }
@@ -72,6 +81,36 @@ export class Menu extends Component {
         console.log(this.state.sliderValue)
     }
 
+    onChange = (param) => (e) => {
+        var prev = document.getElementById(this.state.activeelement);
+        if (this.state.activeelement == "Circle"){
+            var circle1 = document.getElementById("Circle1");
+            var circle2 = document.getElementById("Circle2");
+            circle1.style.color = '#cccccc'
+            circle2.style.color = '#cccccc'
+        }
+        prev.style.color = '#cccccc'
+        var element = document.getElementById(param);
+        if (param == "Circle"){
+            var circle1 = document.getElementById("Circle1");
+            var circle2 = document.getElementById("Circle2");
+            circle1.style.color = '#666666'
+            circle2.style.color = '#666666'
+        }
+        element.style.color = '#666666'
+        this.state.activeelement = param
+        e.preventDefault();
+        this.state.checkedItems["Selected"] = param;
+    }
+
+    colorChange = (param) => (e) => {
+        var prev = document.getElementById(this.state.activecolorelement);
+        var element = document.getElementById(param);
+        this.state.activecolorelement = param
+        e.preventDefault();
+        this.state.checkedItems["ColorScheme"] = param;
+    }
+
     getIcon(name){
         if(name == 'Can'){
             return <i style={{fontSize: '16px', color:'#777777'}} class="far fa-trash-alt"></i>
@@ -85,10 +124,8 @@ export class Menu extends Component {
         
     }
 
-    click(){
-        console.log("test!!")
-    }
     render() {
+        
         const checkboxes = [
             {
               name: 'Solid Rubbish',
@@ -175,7 +212,8 @@ export class Menu extends Component {
                     <div id="sideMenu" className="down-content">
                         <form value={this.state.checkedItems}>
                             
-                            <Selector></Selector>
+                            <Selector onChange={this.onChange} value={this.state.selected}></Selector>
+                            <ColorSelector onChange={this.colorChange} value={this.state.selected}></ColorSelector>
                             <div>
                                 Waste Type
                             </div>

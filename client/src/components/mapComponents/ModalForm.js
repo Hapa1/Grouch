@@ -122,15 +122,15 @@ class ModalForm extends Component {
                 <label>
                     Container Type
                     <label class="container">
-                        <input onChange={this.handleChange.bind(this, "ctype")} type="radio" name="ctype" value="Large Bin"/>Large Bin
+                        <input onChange={this.handleChange.bind(this, "ctype")} type="radio" name="ctype" value="Can"/>Can
                         <span className="checkmark"></span>
                     </label>
                     <label class="container">
-                        <input onChange={this.handleChange.bind(this, "ctype")} type="radio" name="ctype" value="Medium Can"/>Medium Can
+                        <input onChange={this.handleChange.bind(this, "ctype")} type="radio" name="ctype" value="Bin"/>Bin
                         <span className="checkmark"></span>
                     </label>
                     <label class="container">
-                        <input onChange={this.handleChange.bind(this, "ctype")} type="radio" name="ctype" value="Small Container"/>Small Container
+                        <input onChange={this.handleChange.bind(this, "ctype")} type="radio" name="ctype" value="Dumpster"/>Dumpster
                         <span className="checkmark"></span>
                     </label>
                     {this.state.errors["ctype"]}

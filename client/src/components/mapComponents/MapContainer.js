@@ -42,7 +42,8 @@ export class MapContainer extends Component {
     initMap["Moderate"] = true;
     initMap["High"] = true;
     initMap["Critical"] = true;
-    
+    initMap["Selected"] = "Icon";
+    initMap["ColorScheme"] = "Default";
 
     this.state = {
       menuActive: true,
@@ -110,7 +111,7 @@ export class MapContainer extends Component {
     this.setState({
       boxes: param,
     })
- 
+    console.log(this.state.boxes)
   }
 
 
@@ -216,7 +217,72 @@ export class MapContainer extends Component {
       }
   }
 
+  getCircleSize(c,level){
+    if(c.ctype == 'Can'){
+      var size = 14 + level * 1 * .01
+      return size+'px'
+    }
+    if(c.ctype == 'Bin'){
+      
+      var size = 17 + level * 1.5 * .01
+      return size+'px'
+    }
+    if(c.ctype == 'Dumpster'){
+      
+      var size = 19 + level * 5 * .01
+      return size+'px'
+    }
 
+  }
+
+  getLabel(c,currentLevel) {
+    var level = (c.emptyLevel - c.wasteLevels[c.wasteLevels.length-1])
+    
+    var label = {
+      fontFamily: '"Font Awesome 5 Free"',
+      text: "\uf041",
+      color: this.getRGB(c.type,currentLevel),
+      fontSize: '24px',
+      fontWeight: '900',
+    }
+    if (this.state.boxes["ColorScheme"] == 'Default'){
+      label.color = this.getRGB(c.type,currentLevel)
+      
+    }
+    if (this.state.boxes["ColorScheme"] == 'Alt'){
+      var percent = currentLevel = ((c.emptyLevel - c.wasteLevels[c.wasteLevels.length-1])/(c.emptyLevel))*100
+
+      var a = 80 + ((30 - 81) * percent/100)
+      //var b = 3
+      label.color = `hsla(8, ${a}%, ${a}%, 1)`
+      console.log(label.color)
+      //hsla(8, 46%, 43%, 1)
+    }
+    if (this.state.boxes["Selected"] == 'Icon'){
+      if(c.ctype == 'Can'){
+        label.text = "\uf2ed"
+        label.fontSize = '18px'
+      }
+      if(c.ctype == 'Bin'){
+        label.text = "\uf1f8"
+        label.fontSize = '21px'
+      }
+      if(c.ctype == 'Dumpster'){
+        label.text = "\uf793"
+        label.fontSize = '24px'
+      }
+      
+    }
+    if (this.state.boxes["Selected"] == 'Marker'){
+      label.text = "\uf041"
+      label.fontSize = '21px'
+    }
+    if (this.state.boxes["Selected"] == 'Circle'){
+      label.text = "\uf111"
+      label.fontSize = this.getCircleSize(c,level)
+    }
+    return label
+  }
 
   onInfoWindowOpen(props, e) {
     const info = (
@@ -255,14 +321,14 @@ export class MapContainer extends Component {
         displayedContainers.push(key)
       }
     }
-    console.log(displayedContainers)
+    
     return displayedContainers
   }
 
   checkRange(ranges, percent){
     for(var i = 0; i < ranges.length; i++){
       if(percent > ranges[i][0] && percent <= ranges[i][1]){
-        console.log(ranges[i])
+        
         return true;
       }
     }
@@ -284,7 +350,6 @@ export class MapContainer extends Component {
     if(displayedContainers.includes("Critical")){
       ranges.push([75,100])
     }
-    console.log(this.checkRange(ranges,34.3))
     const markers = []
     var i = 0
     var data = this.props.getContainersQuery
@@ -327,13 +392,8 @@ export class MapContainer extends Component {
               type={c.type}
               lat = {c.lat}
               lng = {c.lng}
-              label = {{
-                fontFamily: '"Font Awesome 5 Free"',
-                text: "\uf041",
-                color: this.getRGB(c.type,currentLevel),
-                fontSize: '24px',
-                fontWeight: '900',
-              }}
+              label = { this.getLabel(c,currentLevel)
+              }
               //labelContent = {'<i class="fa fa-send fa-3x" style="color:rgba(153,102,102,0.8);"></i>'}
               position={{
                 lat: c.lat,

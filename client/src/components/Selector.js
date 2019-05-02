@@ -2,48 +2,48 @@ import React, { Component } from 'react';
 import '../static/selector.css';
 import { FaBars, FaMapMarker, FaTrash, FaTrashAlt} from 'react-icons/fa';
 
-class Selector extends Component {
+class ColorSelector extends Component {
     constructor(props) {
         super(props);
         
         this.state = {
-            display: "Marker"
-            
+            activedisplay: "Marker",
+            prevdisplay: "Marker"
         }
         this.handleChange = this.handleChange.bind(this);
     }
     handleChange(e) {
+        //this.props.onChange(this.state.activedisplay)
+        console.log(this.props)
         const item = e.target.id;
-        console.log(item)
         const isChecked = e.target.checked;
         //this.setState(prevState => ({ checkedItems: prevState.checkedItems.set(item, isChecked) }));
         
-        this.setState({prevdisplay: this.state.display, display: item })
-        console.log(this.state)
-        var prevelement = document.getElementById(this.state.display);
-        prevelement.style.backgroundColor = '#cccccc'
-
+        
+        
+        var prevelement = document.getElementById(this.state.activedisplay);
+        prevelement.style.color = '#cccccc'
+        
         var element = document.getElementById(item);
         console.log(element)
-        element.style.backgroundColor = '#aaaaaa'
+        element.style.color = '#666666'
         element.style.animationName = "slide";
-        
+        this.setState({prevdisplay: this.state.activedisplay, activedisplay: item })
+        console.log(this.state)
     }
     
     render() {
         return (
         <div style={{display:'flex'}}>
-            <div className="item" onClick={this.handleChange}  id="Marker">
-                <i style={{fontSize: '20px', color:'#777777'}} class='fas fa-dumpster'></i>
-            </div>
-            <div className="item" onClick={this.handleChange}  id="Icon">
-                <i style={{fontSize: '20px', color:'#777777'}} class='fas fa-dumpster'></i>
-            </div>
-            <div className="item" onClick={this.handleChange}  id="Other">
-            </div>
+    
+                <i onClick={this.props.onChange("Icon")}  id="Icon" style={{margin: '7.5px', fontSize: '20px', color:'#cccccc'}} class='fas fa-dumpster'></i>
+                <i onClick={this.props.onChange("Marker")}  id="Marker" style={{margin: '7.5px', fontSize: '20px', color:'#cccccc'}} class='fas fa-map-marker'></i>
+                <i onClick={this.props.onChange("Circle")}  id="Circle" style={{margin: '7.5px', fontSize: '20px', color:'#cccccc'}} class='fas fa-circle'></i>
+                <i onClick={this.props.onChange("Circle")}  id="Circle1" style={{margin: '7.5px', fontSize: '15px', color:'#cccccc'}} class='fas fa-circle'></i>
+                <i onClick={this.props.onChange("Circle")}  id="Circle2" style={{margin: '7.5px', fontSize: '10px', color:'#cccccc'}} class='fas fa-circle'></i>
         </div>
         );
     }
     }
 
-export default Selector; 
+export default ColorSelector; 
