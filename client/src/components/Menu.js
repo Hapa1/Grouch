@@ -108,6 +108,18 @@ export class Menu extends Component {
         var element = document.getElementById(param);
         this.state.activecolorelement = param
         e.preventDefault();
+        if(param == "Alt"){
+            var div1 = document.getElementById(param)
+            var div2 = document.getElementById('Default')
+            div1.style.backgroundColor = '#eeeeee'
+            div2.style.backgroundColor = '#ffffff'
+        }
+        else {
+            var div1 = document.getElementById(param)
+            var div2 = document.getElementById('Alt')
+            div1.style.backgroundColor = '#eeeeee'
+            div2.style.backgroundColor = '#ffffff'
+        }
         this.state.checkedItems["ColorScheme"] = param;
     }
 
@@ -211,8 +223,9 @@ export class Menu extends Component {
                     
                     <div id="sideMenu" className="down-content">
                         <form value={this.state.checkedItems}>
-                            
+                            Icon Type
                             <Selector onChange={this.onChange} value={this.state.selected}></Selector>
+                            Color Scheme
                             <ColorSelector onChange={this.colorChange} value={this.state.selected}></ColorSelector>
                             <div>
                                 Waste Type
