@@ -16,6 +16,15 @@ const getContainersQuery = gql`
         }
     }
 `
+
+const getContainer = gql`
+    query getContainer($id: ID) {
+        container(id: $id) {
+            id
+        }
+    }
+`
+
 const addContainerMutation = gql`
     mutation($name: String!, $ctype: String!, $id: String!, $type: String!, $lat: Float!, $lng: Float!) { 
         addContainer(ctype: $ctype, id: $id, name: $name, type: $type, lat: $lat, lng: $lng){
@@ -37,6 +46,7 @@ const deleteContainerMutation = gql`
 `
 export {
     getContainersQuery, 
+    getContainer, 
     addContainerMutation, 
     deleteContainerMutation,
 };

@@ -8,13 +8,17 @@ import axios from 'axios';
 import Menu from '../Menu';
 import MarkerInfo from './MarkerInfo';
 import ModalForm from './ModalForm'
-import { graphql, withApollo, compose } from 'react-apollo';
-import { getContainersQuery, deleteContainerMutation  } from '../../queries/queries'
+import {ApolloProvider, graphql, withApollo, compose } from 'react-apollo';
+import { getContainersQuery, getContainer, deleteContainerMutation  } from '../../queries/queries'
 import Header from '../Header';
 import ReactDOM from 'react-dom';
 import Dashboard from '../Dashboard';
 import { FaRegBell } from 'react-icons/fa';
+import ApolloClient from 'apollo-boost';
 
+const client = new ApolloClient({
+  uri: 'http://localhost:5000/graphql'
+})
 
 const mapStyles = {
   width: '100%',
@@ -60,6 +64,7 @@ export class MapContainer extends Component {
 
     this.handleChange = this.handleChange.bind(this);
     this.removeContainer = this.removeContainer.bind(this);
+    this.updateContainer = this.updateContainer.bind(this);
     this.toggleMenu = this.toggleMenu.bind(this);
     this.toggleDash = this.toggleDash.bind(this);
   }
@@ -205,6 +210,23 @@ export class MapContainer extends Component {
     
   }
 
+  updateContainer(e) {
+    e.preventDefault()
+    console.log(this.props)
+    var id = e.target.name
+    //this.props.getContainer({
+    //  variables: { id },
+    // refetchQueries: [{query: getContainersQuery}]
+    //});
+
+    this.props.getContainer.variables = { id }
+    console.log(this.props.getContainer.variables)
+    this.props.getContainer.refetch()
+    
+    //data.refetch()
+    //console.log(data.containers)
+  }
+
   onClickClose() {
       var modal = document.getElementById('myModal');
       modal.style.display = "none";
@@ -286,7 +308,9 @@ export class MapContainer extends Component {
 
   onInfoWindowOpen(props, e) {
     const info = (
-        <MarkerInfo onRemove={this.removeContainer} container={this.state.selectedPlace}/>
+      <ApolloProvider client={client}>
+        <MarkerInfo onUpdate={this.updateContainer} onRemove={this.removeContainer} container={this.state.selectedPlace}/>
+      </ApolloProvider>
     );
     ReactDOM.render(
         React.Children.only(info),
@@ -353,12 +377,13 @@ export class MapContainer extends Component {
     const markers = []
     var i = 0
     var data = this.props.getContainersQuery
+
     if(data.loading || !data.containers){
     }
       
     else {
       var containers = data.containers
-      
+      console.log(containers[2].name, containers[2].wasteLevels)
       containers.forEach((c) => {
         var currentLevel = ((c.emptyLevel - c.wasteLevels[c.wasteLevels.length-1])/(c.emptyLevel))*100
         
@@ -444,6 +469,7 @@ export class MapContainer extends Component {
             marker={this.state.activeMarker}
             visible={this.state.showingInfoWindow}
             onClose={this.onClose}
+            
             onOpen={e => {
               this.onInfoWindowOpen(this.props, e);
             }}
@@ -458,6 +484,7 @@ export class MapContainer extends Component {
 
 MapContainer = compose(
   graphql(getContainersQuery, { name: "getContainersQuery"}),
+  graphql(getContainer, { name: "getContainer"}),
   graphql(deleteContainerMutation, { name: "deleteContainerMutation"})
 )(MapContainer);
 

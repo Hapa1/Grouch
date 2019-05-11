@@ -55,6 +55,7 @@ const RootQuery = new GraphQLObjectType({
             type: ContainerType, //type of data we are looking for 
             args: {id: { type: GraphQLID}}, //pass argument for certain book 
             resolve(parent, args){  //code to get data from db
+                console.log("queried", args.id)
                 return Container.findById(args.id) //query!!!
             }
         },
@@ -116,8 +117,8 @@ const Mutation = new GraphQLObjectType({ //Create and update
                     $push: {wasteLevels: args.level, wasteTimes: moment().format("YYYY-MM-DD HH:mm:ss")},
                 }).then(c => {
                     
-                    console.log(c);
-                    return
+                    console.log(Container);
+                    return c
                 }).catch(err => {
                     console.log(err);
                 })
